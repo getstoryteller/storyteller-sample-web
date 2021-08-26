@@ -1,4 +1,4 @@
-const apiKey = 'cdf9f393-7dd0-4f77-b2a0-58e3c9f67eab';
+const apiKey = '[API_KEY]';
 const userId = 'test-user';
 let storyRow;
 

@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
 import './App.css';
-import { apiKey, userId } from './constants';
+import { API_KEY, USER_ID } from './constants';
 
 function App() {
   const storyRow = useRef();
 
   useEffect(() => {
-    window.Storyteller.sharedInstance.initialize(apiKey).then(function () {
-      window.Storyteller.sharedInstance.setUserDetails({ externalId: userId });
+    window.Storyteller.sharedInstance.initialize(API_KEY).then(function () {
+      window.Storyteller.sharedInstance.setUserDetails({ externalId: USER_ID });
       window.Storyteller.sharedInstance.theme = new window.Storyteller.Theme({
         row: {
           newIndicatorBackgroundColor: 'white',

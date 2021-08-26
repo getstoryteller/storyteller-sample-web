@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "cd ./samples/html && lite-server"
+    "start": "lite-server"
   },
   "repository": {
     "type": "git",
