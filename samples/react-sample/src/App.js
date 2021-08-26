@@ -5,8 +5,6 @@ import { apiKey, userId } from './constants';
 function App() {
   const storyRow = useRef();
 
-  console.log(storyRow);
-
   useEffect(() => {
     window.Storyteller.sharedInstance.initialize(apiKey).then(function () {
       window.Storyteller.sharedInstance.setUserDetails({ externalId: userId });
@@ -27,7 +25,8 @@ function App() {
       });
 
       storyRow.current.delegate = {
-        onUserActivityOccurred: (type, data) => console.log('activity', type, data)
+        onUserActivityOccurred: (type, data) => console.log('activity', type, data),
+        tileBecameVisible: (index) => console.log(index)
       }
       }).catch(e => {
         console.warn(e);
