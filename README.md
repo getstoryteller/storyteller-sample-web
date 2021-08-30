@@ -2,8 +2,9 @@
 
 <p>
   <a href="https://getstoryteller.com" target="_blank"><img alt="What is Storyteller?" src="img/what-is-storyteller-btn.png" width="302" height="48"></a>&nbsp;&nbsp;&nbsp;
-  <a href="https://docs.getstoryteller.com/documents/web-sdk" target="_blank"><img alt="Storyteller Web SDK Documentation" src="img/docs-btn.png" width="272" height="48"></a>
 </p>
+
+[Web SDK Documentation](https://docs.getstoryteller.com/documents/web-sdk)
 
 Use this repo as a reference for integrating Storyteller in your website.
 
