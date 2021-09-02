@@ -3,6 +3,7 @@ import './App.css';
 import { API_KEY, USER_ID } from './constants';
 
 function App() {
+  const topStoryRow = useRef();
   const storyRow = useRef();
 
   useEffect(() => {
@@ -28,15 +29,26 @@ function App() {
         onUserActivityOccurred: (type, data) => console.log('activity', type, data),
         tileBecameVisible: (index) => console.log(index)
       }
+
+      topStoryRow.current = new window.Storyteller.RowView('top-stories-row');
+      topStoryRow.current.theme = new window.Storyteller.RowTheme({
+        leftInset: 16,
+        rightInset: 16,
+        textColor: 'black'
+      });
+
+      topStoryRow.current.delegate = {
+        onUserActivityOccurred: (type, data) => console.log('activity', type, data),
+        tileBecameVisible: (index) => console.log(index)
+      }
       }).catch(e => {
         console.warn(e);
       });
-
-      console.log(storyRow);
   }, []);
 
   return (
     <div className="content">
+      <div className="storyteller" id="top-stories-row" data-cell-type="Square" data-base-url="top-stories" ref={topStoryRow} />
         <div className="skeleton-1" />
         <div className="storyteller" id="default-stories" data-cell-type="Square" ref={storyRow} />
         <div className="skeleton-container">
