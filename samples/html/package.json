@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/getstoryteller/storyteller-sample-web#readme",
   "dependencies": {
+    "axios": "^0.22.0",
     "lite-server": "^2.6.1"
   }
 }
