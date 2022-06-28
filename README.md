@@ -1,5 +1,9 @@
 # Storyteller Web Sample App
 
+<a href="https://getstoryteller.com" target="_blank">
+  <img alt="Storyteller integration examples for Web, from getstoryteller.com" src="img/readme-cover.png">
+</a>
+
 <p>
   <a href="https://getstoryteller.com" target="_blank"><img alt="What is Storyteller?" src="img/what-is-storyteller-btn.png" width="302" height="48"></a>&nbsp;&nbsp;&nbsp;
   <a href="https://docs.getstoryteller.com/documents/web-sdk" target="_blank"><img alt="Storyteller Web Documentation" src="img/docs-btn.png" width="280" height="48"></a>
