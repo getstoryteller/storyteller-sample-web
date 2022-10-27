@@ -1,2 +1,2 @@
-export const API_KEY = '567da990-5a85-46bf-9ad0-fbf5c2234b6a';
+export const API_KEY = 'd88b57d2-843a-4692-b975-27088c9a1915';
 export const USER_ID = 'react-sample-user';
