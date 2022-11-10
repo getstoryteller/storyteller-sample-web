@@ -19,6 +19,24 @@ let storyGrid;
               grid: {
                 columns: 4,
               }
+            },
+            instructions: {
+              backgroundColor: 'white',
+              headingColor: 'black',
+              subHeadingColor: '#1a1a1a',
+              button: {
+                backgroundColor: '#1C62EB',
+                textColor: 'white',
+              },
+              icons: {
+                back: '/arrow-back.svg',
+                forward: '/arrow-forward.svg',
+                pause: '/pause.svg',
+                swipe: '/swipe.svg',
+              },  
+            },
+            player: {
+              showStoryIcon: false,
             }
           }
         });
