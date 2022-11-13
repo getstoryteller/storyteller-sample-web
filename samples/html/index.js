@@ -1,5 +1,5 @@
 const API_KEY = 'd88b57d2-843a-4692-b975-27088c9a1915';
-const USER_ID = 'test-user';
+const USER_ID = 'test-user-dave';
 let storyRow;
 let topStoryRow;
 let storyGrid;
@@ -9,36 +9,38 @@ let storyGrid;
     Storyteller.sharedInstance
       .initialize(API_KEY, { externalId: USER_ID })
       .then(function () {
-        Storyteller.sharedInstance.theme = new Storyteller.UiTheme({
-          light: {
-            lists: {
-              row: {
-                endInset: 16,
-                startInset: 16
-              },
-              grid: {
-                columns: 4,
-              }
+        const theme = {
+          lists: {
+            row: {
+              endInset: 16,
+              startInset: 16
             },
-            instructions: {
-              backgroundColor: 'white',
-              headingColor: 'black',
-              subHeadingColor: '#1a1a1a',
-              button: {
-                backgroundColor: '#1C62EB',
-                textColor: 'white',
-              },
-              icons: {
-                back: '/arrow-back.svg',
-                forward: '/arrow-forward.svg',
-                pause: '/pause.svg',
-                swipe: '/swipe.svg',
-              },  
-            },
-            player: {
-              showStoryIcon: false,
+            grid: {
+              columns: 4,
             }
+          },
+          instructions: {
+            backgroundColor: 'white',
+            headingColor: 'black',
+            subHeadingColor: '#1a1a1a',
+            button: {
+              backgroundColor: '#1C62EB',
+              textColor: 'white',
+            },
+            icons: {
+              back: './arrow-back.svg',
+              forward: './arrow-forward.svg',
+              pause: './pause.svg',
+              swipe: './swipe.svg',
+            },  
+          },
+          player: {
+            showStoryIcon: false,
           }
+        };
+        Storyteller.sharedInstance.theme = new Storyteller.UiTheme({
+          light: theme,
+          dark: theme
         });
         initializeRows();
       }).catch(e => {
