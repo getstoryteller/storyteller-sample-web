@@ -65,13 +65,23 @@ let storyGrid;
     storyRow = new Storyteller.RowView('default-stories');
     storyRow.delegate = {
       onUserActivityOccurred: (type, data) => console.log('activity', type, data),
-      tileBecameVisible: (index) => console.log(index)
+      tileBecameVisible: (index) => console.log(index),
+      onStoriesDataLoadComplete: (success, error, dataCount) => {
+        if(error || dataCount === 0) {
+          document.getElementById('default-stories').style.display = 'none';
+        }
+      }
     }
 
     topStoryRow = new Storyteller.RowView('top-stories-row');
     topStoryRow.delegate = {
       onUserActivityOccurred: (type, data) => console.log('activity', type, data),
-      tileBecameVisible: (index) => console.log(index)
+      tileBecameVisible: (index) => console.log(index),
+      onStoriesDataLoadComplete: (success, error, dataCount) => {
+        if(error || dataCount === 0) {
+          document.getElementById('top-stories-row').style.display = 'none';
+        }
+      }
     }
 
     storyGrid = new Storyteller.GridView('stories-grid');

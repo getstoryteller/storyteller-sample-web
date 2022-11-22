@@ -54,6 +54,13 @@ function App() {
           onUserActivityOccurred: (type, data) =>
             console.log("activity", type, data),
           tileBecameVisible: (index) => console.log(index),
+          onStoriesDataLoadComplete: (success, error, dataCount) => {
+            if (error || dataCount === 0) {
+              if (storyRow && storyRow.current) {
+                storyRow.current.rootEl.style.display = "none";
+              }
+            }
+          },
         };
 
         topStoryRow.current = new Storyteller.RowView("top-stories-row");
@@ -61,6 +68,13 @@ function App() {
           onUserActivityOccurred: (type, data) =>
             console.log("activity", type, data),
           tileBecameVisible: (index) => console.log(index),
+          onStoriesDataLoadComplete: (success, error, dataCount) => {
+            if (error || dataCount === 0) {
+              if (topStoryRow && topStoryRow.current) {
+                topStoryRow.current.rootEl.style.display = "none";
+              }
+            }
+          },
         };
 
         storyGrid.current = new Storyteller.GridView("stories-grid");
