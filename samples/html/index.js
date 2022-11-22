@@ -1,4 +1,4 @@
-const API_KEY = 'YOUR_API_KEY';
+const API_KEY = 'd88b57d2-843a-4692-b975-27088c9a1915';
 const USER_ID = 'test-user-dave';
 let storyRow;
 let topStoryRow;

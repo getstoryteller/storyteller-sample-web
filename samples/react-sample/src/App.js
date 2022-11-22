@@ -54,6 +54,13 @@ function App() {
           onUserActivityOccurred: (type, data) =>
             console.log("activity", type, data),
           tileBecameVisible: (index) => console.log(index),
+          onStoriesDataLoadComplete: (success, error, dataCount) => {
+            if (error || dataCount === 0) {
+              if (storyRow && storyRow.current) {
+                storyRow.current.rootEl.style.display = "none";
+              }
+            }
+          },
         };
 
         topStoryRow.current = new Storyteller.RowView("top-stories-row");
@@ -61,6 +68,13 @@ function App() {
           onUserActivityOccurred: (type, data) =>
             console.log("activity", type, data),
           tileBecameVisible: (index) => console.log(index),
+          onStoriesDataLoadComplete: (success, error, dataCount) => {
+            if (error || dataCount === 0) {
+              if (topStoryRow && topStoryRow.current) {
+                topStoryRow.current.rootEl.style.display = "none";
+              }
+            }
+          },
         };
 
         storyGrid.current = new Storyteller.GridView("stories-grid");
@@ -73,7 +87,7 @@ function App() {
   return (
     <div className="content">
       <div
-        className="storyteller"
+        className={"storyteller"}
         id="top-stories-row"
         data-cell-type="round"
         data-base-url="top-stories"
@@ -81,7 +95,7 @@ function App() {
       />
       <div className="skeleton-1" />
       <div
-        className="storyteller"
+        className={"storyteller"}
         id="default-stories"
         data-cell-type="square"
         style={{ height: 150 }}
@@ -93,7 +107,7 @@ function App() {
           <div className="skeleton-4" />
         </div>
       </div>
-      <div className="storyteller" id="stories-grid" />
+      <div className={"storyteller"} id="stories-grid" />
     </div>
   );
 }
