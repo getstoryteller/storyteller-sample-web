@@ -87,7 +87,7 @@ function App() {
   return (
     <div className="content">
       <div
-        className={"storyteller"}
+        className="storyteller"
         id="top-stories-row"
         data-cell-type="round"
         data-base-url="top-stories"
@@ -95,7 +95,7 @@ function App() {
       />
       <div className="skeleton-1" />
       <div
-        className={"storyteller"}
+        className="storyteller"
         id="default-stories"
         data-cell-type="square"
         style={{ height: 150 }}
@@ -107,7 +107,7 @@ function App() {
           <div className="skeleton-4" />
         </div>
       </div>
-      <div className={"storyteller"} id="stories-grid" />
+      <div className="storyteller" id="stories-grid" />
     </div>
   );
 }
