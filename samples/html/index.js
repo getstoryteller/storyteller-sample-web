@@ -1,4 +1,4 @@
-const API_KEY = 'd88b57d2-843a-4692-b975-27088c9a1915';
+const API_KEY = 'YOUR_API_KEY';
 const USER_ID = 'test-user-dave';
 let storyRow;
 let topStoryRow;
@@ -65,13 +65,23 @@ let storyGrid;
     storyRow = new Storyteller.RowView('default-stories');
     storyRow.delegate = {
       onUserActivityOccurred: (type, data) => console.log('activity', type, data),
-      tileBecameVisible: (index) => console.log(index)
+      tileBecameVisible: (index) => console.log(index),
+      onStoriesDataLoadComplete: (success, error, dataCount) => {
+        if(error || dataCount === 0) {
+          document.getElementById('default-stories').style.display = 'none';
+        }
+      }
     }
 
     topStoryRow = new Storyteller.RowView('top-stories-row');
     topStoryRow.delegate = {
       onUserActivityOccurred: (type, data) => console.log('activity', type, data),
-      tileBecameVisible: (index) => console.log(index)
+      tileBecameVisible: (index) => console.log(index),
+      onStoriesDataLoadComplete: (success, error, dataCount) => {
+        if(error || dataCount === 0) {
+          document.getElementById('top-stories-row').style.display = 'none';
+        }
+      }
     }
 
     storyGrid = new Storyteller.GridView('stories-grid');
