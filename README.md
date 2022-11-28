@@ -18,7 +18,7 @@ Storyteller is also available for [iOS](https://github.com/getstoryteller/storyt
 For help with Storyteller, please check our [Documentation and User Guide](https://docs.getstoryteller.com/documents/) or contact [support@getstoryteller.com](mailto:support@getstoryteller.com?Subject=web%20Sample%20App).
 ## Html Sample
 
-**Running the sample**
+To run this sample:
 
 1. `cd` to `samples/html` and run `npm install`
 2. Supply your team's API Key by changing the value of `API_KEY` in `index.js`
@@ -26,8 +26,16 @@ For help with Storyteller, please check our [Documentation and User Guide](https
 
 ## React Sample
 
-**Running the sample**
+To run this sample:
 
 1. `cd` to `samples/react-sample` and run `npm install`
 2. Supply your team's API Key by changing the value of `API_KEY` in `src/constants.js`
+3. Run `npm start`
+
+## Typescript Sample
+
+To run this sample:
+
+1. `cd` to `samples/typescript` and run `npm install`
+2. Supply your team's API Key by changing the value of `API_KEY` in `index.ts`
 3. Run `npm start`
