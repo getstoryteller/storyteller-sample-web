@@ -17,6 +17,6 @@
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {
-    "@getstoryteller/storyteller-sdk-javascript": "^7.7.1"
+    "@getstoryteller/storyteller-sdk-javascript": "7.7.2"
   }
 }
