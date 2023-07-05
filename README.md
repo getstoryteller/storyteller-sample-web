@@ -39,3 +39,7 @@ To run this sample:
 1. `cd` to `samples/typescript` and run `npm install`
 2. Supply your team's API Key by changing the value of `API_KEY` in `index.ts`
 3. Run `npm start`
+
+## Requirements
+
+Note that this sample supports Node 18.16.1 (the latest LTS version). The Storyteller Web SDK delivers compiled Javascript so does not depend on a specific NodeJS version.
