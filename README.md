@@ -42,4 +42,4 @@ To run this sample:
 
 ## Requirements
 
-Note that this sample supports Node 18.16.1 and up, because of its dependencies. The Storyteller Web SDK delivers compiled Javascript so does not depend on a specific NodeJS version.
+Note that this sample supports Node 18.16.1 (the latest LTS version). The Storyteller Web SDK delivers compiled Javascript so does not depend on a specific NodeJS version.
