@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=16.15.0"
+    "node": ">=18.16.1"
   },
   "dependencies": {
     "@getstoryteller/storyteller-sdk-javascript": "8.4.0",
