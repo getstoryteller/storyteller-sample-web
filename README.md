@@ -9,37 +9,43 @@
   <a href="https://docs.getstoryteller.com/documents/web-sdk" target="_blank"><img alt="Storyteller Web Documentation" src="img/docs-btn.png" width="280" height="48"></a>
 </p>
 
-[Web SDK Documentation](https://docs.getstoryteller.com/documents/web-sdk)
+## SDK Installation
 
-Use this repo as a reference for integrating Storyteller in your website.
+### Install with NPM
+
+`npm install @getstoryteller/storyteller-sdk-javascript`
+
+### Install with Yarn
+
+`yarn add @getstoryteller/storyteller-sdk-javascript`
+
+### Install via CDN
+
+```
+  <script
+      type="text/javascript"
+      src="https://content.usestoryteller.com/javascript-sdk/8.4.2/dist/storyteller.min.js"
+    ></script>
+```
+
+## Documentation
+
+All of the documentation for our Web SDK is [available on our website](https://www.getstoryteller.com/documentation/web/quickstart)
+
+## Sample Apps
+
+This repo contains the following sample applications:
+
+- [NextJS Sample](https://github.com/getstoryteller/storyteller-sample-web/tree/main/nextjs)
+- [Simple HTML Sample](https://github.com/getstoryteller/storyteller-sample-web/tree/main/html)
+- [ReactJS Sample](https://github.com/getstoryteller/storyteller-sample-web/tree/main/reactjs)
+
+The NextJS Sample can also be [previewed online](https://sample.usestoryteller.com).
+
+## Other Platforms
 
 Storyteller is also available for [iOS](https://github.com/getstoryteller/storyteller-sample-ios), [Android](https://github.com/getstoryteller/storyteller-sample-android) and [React Native](https://github.com/getstoryteller/storyteller-sdk-react-native).
 
-For help with Storyteller, please check our [Documentation and User Guide](https://docs.getstoryteller.com/documents/) or contact [support@getstoryteller.com](mailto:support@getstoryteller.com?Subject=web%20Sample%20App).
-## Html Sample
+## Need Help?
 
-To run this sample:
-
-1. `cd` to `samples/html` and run `npm install`
-2. Supply your team's API Key by changing the value of `API_KEY` in `index.js`
-3. Run `npm start`
-
-## React Sample
-
-To run this sample:
-
-1. `cd` to `samples/react-sample` and run `npm install`
-2. Supply your team's API Key by changing the value of `API_KEY` in `src/constants.js`
-3. Run `npm start`
-
-## Typescript Sample
-
-To run this sample:
-
-1. `cd` to `samples/typescript` and run `npm install`
-2. Supply your team's API Key by changing the value of `API_KEY` in `index.ts`
-3. Run `npm start`
-
-## Requirements
-
-Note that this sample supports Node 18.16.1 (the latest LTS version). The Storyteller Web SDK delivers compiled Javascript so does not depend on a specific NodeJS version.
+We're always available at [support@getstoryteller.com](mailto:support@getstoryteller.com?Subject=Web%20Sample%20App) to provide help and assistance with integrating the Storyteller SDK into your website.

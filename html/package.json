@@ -1,0 +1,11 @@
+{
+  "name": "storyteller-web-sample-html",
+  "version": "8.4.2",
+  "private": true,
+  "scripts": {
+    "start": "http-server"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
