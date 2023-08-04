@@ -40,8 +40,6 @@ This repo contains the following sample applications:
 - [Simple HTML Sample](https://github.com/getstoryteller/storyteller-sample-web/tree/main/html)
 - [ReactJS Sample](https://github.com/getstoryteller/storyteller-sample-web/tree/main/reactjs)
 
-The NextJS Sample can also be [previewed online](https://sample.usestoryteller.com).
-
 ## Other Platforms
 
 Storyteller is also available for [iOS](https://github.com/getstoryteller/storyteller-sample-ios), [Android](https://github.com/getstoryteller/storyteller-sample-android) and [React Native](https://github.com/getstoryteller/storyteller-sdk-react-native).
