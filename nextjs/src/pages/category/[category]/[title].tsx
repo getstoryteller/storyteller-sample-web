@@ -39,7 +39,7 @@ const CategoryPage = ({
 
 export const getServerSideProps: GetServerSideProps<any> = async () => {
   const storytellerApiKey = process.env.STORYTELLER_API_KEY;
-  const amplitudeApiKey = process.env.AMPLITUDE_API_KEY;
+  const amplitudeApiKey = process.env.AMPLITUDE_API_KEY || null;
 
   return { props: { storytellerApiKey, amplitudeApiKey } };
 };
