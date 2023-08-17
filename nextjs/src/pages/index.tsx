@@ -58,7 +58,7 @@ const Home = ({
 export const getServerSideProps: GetServerSideProps<any> = async () => {
   const storytellerApiKey = process.env.STORYTELLER_API_KEY;
   const amplitudeApiKey = process.env.AMPLITUDE_API_KEY || null;
-  const verticalVideoListsApiURL = 'https://sampleappcontent.usestoryteller.com/api/entries';
+  const verticalVideoListsApiURL = `https://sampleappcontent.usestoryteller.com/api/entries?apiKey=${storytellerApiKey}`;
 
   const entriesResponse = await fetch(verticalVideoListsApiURL);
   if (!entriesResponse.ok) {
