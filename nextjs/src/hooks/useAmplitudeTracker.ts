@@ -1,4 +1,4 @@
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { UserActivityData } from '@getstoryteller/storyteller-sdk-javascript';
 import * as amplitude from '@amplitude/analytics-browser';
 import { useContext } from 'react';
 import { AmplitudeContext } from '@/contexts/AmplitudeContext';
@@ -14,7 +14,7 @@ import { AmplitudeContext } from '@/contexts/AmplitudeContext';
 
 export const useAmplitudeTracker = () => {
   const { amplitudeInitialized } = useContext(AmplitudeContext);
-  const logOpenedStory = (data: Storyteller.UserActivityData): void => {
+  const logOpenedStory = (data: UserActivityData): void => {
     let eventData = {
       'Story ID': data.storyId,
       'Story Category': data.categories?.join(';'),

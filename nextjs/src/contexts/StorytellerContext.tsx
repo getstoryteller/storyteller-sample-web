@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { sharedInstance as Storyteller } from '@getstoryteller/storyteller-sdk-javascript';
 import { useEnvVariables } from '@/hooks/useEnvVariables';
 
 // This file initializes the Storyteller SDK and makes sure this happens
@@ -36,7 +36,7 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
       if (!storytellerApiKey) {
         throw new Error('Web SDK API key is not defined');
       }
-      storytellerInstance.current = Storyteller.sharedInstance
+      storytellerInstance.current = Storyteller
         .initialize(storytellerApiKey, {
           externalId: userId,
         })
@@ -44,7 +44,7 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
           setIsStorytellerInitialized(true);
           console.log(
             'Storyteller initialized',
-            Storyteller.sharedInstance.version,
+            Storyteller.version,
           );
         });
     },

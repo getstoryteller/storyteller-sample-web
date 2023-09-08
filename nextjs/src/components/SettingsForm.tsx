@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useState } from 'react';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { User as StorytellerUser } from '@getstoryteller/storyteller-sdk-javascript';
 import { useRouter } from 'next/router';
 
 enum Settings {
@@ -61,12 +61,12 @@ interface FormElements {
 const SettingsForm = () => {
   const [alertVisible, setAlertVisible] = React.useState(false);
   const defaultLanguage =
-    Storyteller.User.getUserAttribute(Settings.language) || 'EN';
-  const defaultTeam = Storyteller.User.getUserAttribute(Settings.favoriteTeam);
+    StorytellerUser.getUserAttribute(Settings.language) || 'EN';
+  const defaultTeam = StorytellerUser.getUserAttribute(Settings.favoriteTeam);
   const router = useRouter();
 
   const setLocalSetting = (key: string, value: string) => {
-    Storyteller.User.setUserAttribute(key, value);
+    StorytellerUser.setUserAttribute(key, value);
   };
 
   const handleSubmit = (

@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { VerticalVideoList } from '@/models/content';
 import WebsiteHeader from '@/components/WebsiteHeader';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { User as StorytellerUser } from '@getstoryteller/storyteller-sdk-javascript';
 import StorytellerContextProvider from '@/contexts/StorytellerContext';
 import StorytellerStoryUnit from '@/components/StorytellerStoryUnit';
 
@@ -26,7 +26,7 @@ const Home = ({
   amplitudeApiKey,
 }: IndexProps) => {
   const languageSetting =
-    Storyteller?.User?.getUserAttribute('language') || 'en';
+    StorytellerUser.getUserAttribute('language') || 'en';
   return (
     <>
       <Head>
