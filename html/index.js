@@ -1,7 +1,7 @@
 (function () {
   // Replace this with your own API key. You can reach out to hello@getstoryteller.com
   // to obtain an API key.
-  const API_KEY = '[API-KEY]';
+  const API_KEY = 'f8d7c0a4-113d-40b7-b446-ca29d5eb1268';
 
   let storyRow;
   let topStoryRow;
