@@ -1,6 +1,6 @@
 'use client';
 
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { ActivityType, GridView, UiTheme, UserActivityData } from '@getstoryteller/storyteller-sdk-javascript';
 import '@getstoryteller/storyteller-sdk-javascript/dist/storyteller.min.css';
 import { useEffect, useRef } from 'react';
 import useStoryteller from '@/hooks/useStoryteller';
@@ -30,7 +30,7 @@ const StorytellerStoriesGridView = ({
 }: StorytellerStoriesGridViewProps) => {
   const urlSafeCategories = categories.join('-');
   const id = 'storyteller-stories-grid-view-' + urlSafeCategories;
-  const storyGrid = useRef<Storyteller.GridView>();
+  const storyGrid = useRef<GridView>();
   const { isStorytellerInitialized } = useStoryteller();
   const { logOpenedStory } = useAmplitudeTracker();
   useEffect(() => {
@@ -44,9 +44,9 @@ const StorytellerStoriesGridView = ({
     // The grid will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyGrid.current = new Storyteller.GridView(id, categories);
+    storyGrid.current = new GridView(id, categories);
     storyGrid.current.displayLimit = displayLimit;
-    storyGrid.current.theme = new Storyteller.UiTheme({
+    storyGrid.current.theme = new UiTheme({
       light: FOUR_COLUMNS_LAYOUT,
       dark: FOUR_COLUMNS_LAYOUT,
     });
@@ -59,7 +59,7 @@ const StorytellerStoriesGridView = ({
       //
       // For more information on how to configure Ads for the Storyteller Web SDK
       // please see https://www.getstoryteller.com/documentation/web/ads
-      getAdConfig: (stories) => {
+      getAdConfig: () => {
         return {
           slot: '/33813572/qa-ads',
         };
@@ -70,9 +70,9 @@ const StorytellerStoriesGridView = ({
       // you could use any analytics provider you wish).
       // For more information on the events and associated data, please see:
       // https://www.getstoryteller.com/documentation/web/analytics
-      onUserActivityOccurred: (type, data) => {
+      onUserActivityOccurred: (type: ActivityType, data: UserActivityData) => {
         switch (type) {
-          case Storyteller.ActivityType.openedStory:
+          case ActivityType.openedStory:
             logOpenedStory(data);
             break;
         }

@@ -1,7 +1,7 @@
 'use client';
 
 import { Size, TileType } from '@/models/content';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { ActivityType, CellType, RowView, UiTheme, UserActivityData } from '@getstoryteller/storyteller-sdk-javascript';
 import '@getstoryteller/storyteller-sdk-javascript/dist/storyteller.min.css';
 import { useEffect, useRef } from 'react';
 import buildBasicTheme from '@/helpers/buildBasicTheme';
@@ -54,16 +54,16 @@ const StorytellerStoriesRowView = ({
     // The row will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyRow.current = new Storyteller.RowView(id, categories);
+    storyRow.current = new RowView(id, categories);
     storyRow.current.displayLimit = displayLimit;
-    storyRow.current.theme = new Storyteller.UiTheme({
+    storyRow.current.theme = new UiTheme({
       light: buildBasicTheme(),
       dark: buildBasicTheme(),
     });
     storyRow.current.cellType =
       tileType === TileType.round
-        ? Storyteller.CellType.round
-        : Storyteller.CellType.square;
+        ? CellType.round
+        : CellType.square;
     // The Story Row has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK
     // For more information on the various delegate callbacks, please see
@@ -73,7 +73,7 @@ const StorytellerStoriesRowView = ({
       //
       // For more information on how to configure Ads for the Storyteller Web SDK
       // please see https://www.getstoryteller.com/documentation/web/ads
-      getAdConfig: (stories) => {
+      getAdConfig: () => {
         return {
           slot: '/33813572/qa-ads',
         };
@@ -84,9 +84,9 @@ const StorytellerStoriesRowView = ({
       // you could use any analytics provider you wish).
       // For more information on the events and associated data, please see:
       // https://www.getstoryteller.com/documentation/web/analytics
-      onUserActivityOccurred: (type, data) => {
+      onUserActivityOccurred: (type: ActivityType, data: UserActivityData) => {
         switch (type) {
-          case Storyteller.ActivityType.openedStory:
+          case ActivityType.openedStory:
             logOpenedStory(data);
             break;
         }

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import useStoryteller from '@/hooks/useStoryteller';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { User as StorytellerUser } from '@getstoryteller/storyteller-sdk-javascript';
 
 const USER_ID_KEY = 'userId';
 interface ButtonProps {
@@ -20,8 +20,8 @@ const LogoutButton = ({ setUserId }: ButtonProps) => {
       onClick={() => {
         setUserId(null);
         if (isStorytellerInitialized) {
-          Storyteller.User.removeUserAttribute('language');
-          Storyteller.User.removeUserAttribute('favoriteTeam');
+          StorytellerUser.removeUserAttribute('language');
+          StorytellerUser.removeUserAttribute('favoriteTeam');
         }
       }}
     >
