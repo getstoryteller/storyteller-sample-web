@@ -25,8 +25,7 @@ const Home = ({
   storytellerApiKey,
   amplitudeApiKey,
 }: IndexProps) => {
-  const languageSetting =
-    StorytellerUser.getUserAttribute('language') || 'en';
+  const languageSetting = StorytellerUser.getUserAttribute('language') || 'en';
   return (
     <>
       <Head>
@@ -66,7 +65,13 @@ export const getServerSideProps: GetServerSideProps<any> = async () => {
   }
   const { data: verticalVideoLists } = await entriesResponse.json();
 
-  return { props: { verticalVideoLists, storytellerApiKey, amplitudeApiKey } };
+  return {
+    props: {
+      verticalVideoLists,
+      storytellerApiKey,
+      amplitudeApiKey,
+    },
+  };
 };
 
 export default Home;

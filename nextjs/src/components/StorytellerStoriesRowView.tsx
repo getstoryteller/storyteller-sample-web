@@ -1,7 +1,13 @@
 'use client';
 
 import { Size, TileType } from '@/models/content';
-import { ActivityType, CellType, RowView, UiTheme, UserActivityData } from '@getstoryteller/storyteller-sdk-javascript';
+import {
+  ActivityType,
+  CellType,
+  RowView,
+  UiTheme,
+  UserActivityData,
+} from '@getstoryteller/storyteller-sdk-javascript';
 import '@getstoryteller/storyteller-sdk-javascript/dist/storyteller.min.css';
 import { useEffect, useRef } from 'react';
 import buildBasicTheme from '@/helpers/buildBasicTheme';
@@ -28,8 +34,8 @@ const StorytellerStoriesRowView = ({
 }: StorytellerStoriesRowViewProps) => {
   const urlSafeCategories = categories.join('-');
   const id = 'storyteller-stories-row-view-' + urlSafeCategories;
-  const storyRow = useRef<Storyteller.RowView>();
-  const { logOpenedStory } = useAmplitudeTracker();
+  const storyRow = useRef<RowView>();
+  const { logUserActivityToAmplitude } = useAmplitudeTracker();
 
   let height = 140;
   switch (size) {
@@ -50,7 +56,7 @@ const StorytellerStoriesRowView = ({
     // This method creates a new Storyteller row, replacing the div with the id generated above
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-row-view
-    // 
+    //
     // The row will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
@@ -61,9 +67,7 @@ const StorytellerStoriesRowView = ({
       dark: buildBasicTheme(),
     });
     storyRow.current.cellType =
-      tileType === TileType.round
-        ? CellType.round
-        : CellType.square;
+      tileType === TileType.round ? CellType.round : CellType.square;
     // The Story Row has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK
     // For more information on the various delegate callbacks, please see
@@ -85,11 +89,8 @@ const StorytellerStoriesRowView = ({
       // For more information on the events and associated data, please see:
       // https://www.getstoryteller.com/documentation/web/analytics
       onUserActivityOccurred: (type: ActivityType, data: UserActivityData) => {
-        switch (type) {
-          case ActivityType.openedStory:
-            logOpenedStory(data);
-            break;
-        }
+        console.log('onUserActivityOccurred', type, data);
+        logUserActivityToAmplitude(type, data);
       },
       // This callback is used to inform your code when a user taps a share
       // button on any story. This example shows how to modify the URL which is
@@ -112,7 +113,7 @@ const StorytellerStoriesRowView = ({
     displayLimit,
     tileType,
     isStorytellerInitialized,
-    logOpenedStory,
+    logUserActivityToAmplitude,
   ]);
 
   return (

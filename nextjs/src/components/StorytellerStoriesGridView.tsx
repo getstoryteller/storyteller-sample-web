@@ -1,6 +1,11 @@
 'use client';
 
-import { ActivityType, GridView, UiTheme, UserActivityData } from '@getstoryteller/storyteller-sdk-javascript';
+import {
+  ActivityType,
+  GridView,
+  UiTheme,
+  UserActivityData,
+} from '@getstoryteller/storyteller-sdk-javascript';
 import '@getstoryteller/storyteller-sdk-javascript/dist/storyteller.min.css';
 import { useEffect, useRef } from 'react';
 import useStoryteller from '@/hooks/useStoryteller';
@@ -32,7 +37,7 @@ const StorytellerStoriesGridView = ({
   const id = 'storyteller-stories-grid-view-' + urlSafeCategories;
   const storyGrid = useRef<GridView>();
   const { isStorytellerInitialized } = useStoryteller();
-  const { logOpenedStory } = useAmplitudeTracker();
+  const { logUserActivityToAmplitude } = useAmplitudeTracker();
   useEffect(() => {
     if (!isStorytellerInitialized) {
       return;
@@ -40,7 +45,7 @@ const StorytellerStoriesGridView = ({
     // This method creates a new Storyteller grid, replacing the div with the id generated above
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-grid-view
-    // 
+    //
     // The grid will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
@@ -71,11 +76,7 @@ const StorytellerStoriesGridView = ({
       // For more information on the events and associated data, please see:
       // https://www.getstoryteller.com/documentation/web/analytics
       onUserActivityOccurred: (type: ActivityType, data: UserActivityData) => {
-        switch (type) {
-          case ActivityType.openedStory:
-            logOpenedStory(data);
-            break;
-        }
+        logUserActivityToAmplitude(type, data);
       },
       // This callback is used to inform your code when a user taps a share
       // button on any story. This example shows how to modify the URL which is
@@ -92,7 +93,13 @@ const StorytellerStoriesGridView = ({
         });
       },
     };
-  }, [id, categories, displayLimit, logOpenedStory, isStorytellerInitialized]);
+  }, [
+    id,
+    categories,
+    displayLimit,
+    logUserActivityToAmplitude,
+    isStorytellerInitialized,
+  ]);
 
   return (
     <>

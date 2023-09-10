@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
   PropsWithChildren,
   useCallback,
@@ -29,26 +31,24 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
 
   const [isStorytellerInitialized, setIsStorytellerInitialized] =
     useState<boolean>(false);
-  const storytellerInstance = useRef<any>();
 
   const initializeStoryteller = useCallback(
     (userId: string | undefined = undefined) => {
       if (!storytellerApiKey) {
         throw new Error('Web SDK API key is not defined');
-      }
-      storytellerInstance.current = Storyteller
-        .initialize(storytellerApiKey, {
-          externalId: userId,
-        })
-        .then(() => {
+      } else if (!isStorytellerInitialized) {
+        Storyteller.initialize(
+          storytellerApiKey,
+          {
+            externalId: userId,
+          },
+        ).then(() => {
           setIsStorytellerInitialized(true);
-          console.log(
-            'Storyteller initialized',
-            Storyteller.version,
-          );
+          console.log('Storyteller initialized', Storyteller.version);
         });
+      }
     },
-    [storytellerApiKey],
+    [isStorytellerInitialized, storytellerApiKey],
   );
 
   useEffect(() => {
