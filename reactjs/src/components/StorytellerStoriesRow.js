@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { CellType, RowView } from '@getstoryteller/storyteller-sdk-javascript';
 
 import useStoryteller from '../hooks/useStoryteller';
 import getStorytellerTheme from '../helpers/themeManager';
@@ -31,17 +31,15 @@ function StorytellerStoriesRow({ tileType, size, categories, displayLimit }) {
     // This method creates a new Storyteller row, replacing the div with the id generated above
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-row-view
-    // 
+    //
     // The row will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyRow.current = new Storyteller.RowView(id, categories);
+    storyRow.current = new RowView(id, categories);
     storyRow.current.displayLimit = displayLimit;
     storyRow.current.theme = getStorytellerTheme();
     storyRow.current.cellType =
-      tileType === 'round'
-        ? Storyteller.CellType.round
-        : Storyteller.CellType.square;
+      tileType === 'round' ? CellType.round : CellType.square;
     // The Story Row has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK
     // For more information on the various delegate callbacks, please see

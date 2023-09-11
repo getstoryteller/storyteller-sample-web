@@ -1,4 +1,4 @@
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { UiTheme } from '@getstoryteller/storyteller-sdk-javascript';
 
 // This function defines the theme for the Storyteller UI.
 // For more details on the various properties, please refer to the documentation at
@@ -63,7 +63,7 @@ function getStorytellerTheme() {
       },
     },
   };
-  return new Storyteller.UiTheme({
+  return new UiTheme({
     light: lightTheme,
     dark: darkTheme,
   });

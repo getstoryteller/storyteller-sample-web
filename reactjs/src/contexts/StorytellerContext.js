@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import React, { useCallback, useEffect, useState } from 'react';
+import { sharedInstance as Storyteller } from '@getstoryteller/storyteller-sdk-javascript';
 
 import { useEnvVariables } from '../hooks/useEnvVariables';
 
@@ -18,14 +18,13 @@ const StorytellerContextProvider = ({ children }) => {
 
   const [isStorytellerInitialized, setIsStorytellerInitialized] =
     useState(false);
-  const storytellerInstance = useRef();
 
   const initializeStoryteller = useCallback(
     (userId) => {
       if (!storytellerApiKey) {
         throw new Error('No Storyteller API key has been provided.');
       }
-      storytellerInstance.current = Storyteller.sharedInstance
+      Storyteller
         .initialize(storytellerApiKey, {
           externalId: userId,
         })
@@ -33,7 +32,7 @@ const StorytellerContextProvider = ({ children }) => {
           setIsStorytellerInitialized(true);
           console.log(
             'Storyteller initialized',
-            Storyteller.sharedInstance.version,
+            Storyteller.version,
           );
         });
     },

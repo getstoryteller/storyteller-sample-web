@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import Storyteller from '@getstoryteller/storyteller-sdk-javascript';
+import { GridView } from '@getstoryteller/storyteller-sdk-javascript';
 
 import useStoryteller from '../hooks/useStoryteller';
 import getStorytellerTheme from '../helpers/themeManager';
@@ -23,7 +23,7 @@ function StorytellerStoriesGrid({ categories, displayLimit }) {
     // The grid will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyGrid.current = new Storyteller.GridView(id, categories);
+    storyGrid.current = new GridView(id, categories);
     storyGrid.current.displayLimit = displayLimit;
     storyGrid.current.theme = getStorytellerTheme();
     // The Story Grid has a delegate object attached which allows your code
