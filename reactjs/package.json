@@ -1,9 +1,9 @@
 {
   "name": "storyteller-web-sample-react",
-  "version": "8.8.3",
+  "version": "8.8.4",
   "private": true,
   "dependencies": {
-    "@getstoryteller/storyteller-sdk-javascript": "8.8.3",
+    "@getstoryteller/storyteller-sdk-javascript": "8.8.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1"
