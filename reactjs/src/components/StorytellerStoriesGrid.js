@@ -3,11 +3,13 @@ import { GridView } from '@getstoryteller/storyteller-sdk-javascript';
 
 import useStoryteller from '../hooks/useStoryteller';
 import getStorytellerTheme from '../helpers/themeManager';
+import TitleAndMoreButton from './TitleAndMoreButton';
 
-function StorytellerStoriesGrid({ categories, displayLimit }) {
-  const urlSafeCategories = categories ? categories.join('-') : 'dave';
+function StorytellerStoriesGrid({ title, categories, displayLimit }) {
+  const urlSafeCategories = categories ? categories.join('-') : 'home';
   const id = 'storyteller-stories-grid-' + urlSafeCategories;
   const storyGrid = useRef();
+  const gridContainer = useRef();
 
   const { isStorytellerInitialized } = useStoryteller();
 
@@ -19,7 +21,7 @@ function StorytellerStoriesGrid({ categories, displayLimit }) {
     // This method creates a new Storyteller grid, replacing the div with the id generated above
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-grid-view
-    // 
+    //
     // The grid will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
@@ -46,8 +48,8 @@ function StorytellerStoriesGrid({ categories, displayLimit }) {
       // In general, we recommend this as a sensible approach in most cases
       onStoriesDataLoadComplete: (success, error, dataCount) => {
         if (error || dataCount === 0) {
-          if (storyGrid && storyGrid.current) {
-            storyGrid.current.rootEl.style.display = 'none';
+          if (gridContainer && gridContainer.current) {
+            gridContainer.current.style.display = 'none';
           }
         }
       },
@@ -55,11 +57,16 @@ function StorytellerStoriesGrid({ categories, displayLimit }) {
   }, [id, categories, displayLimit, isStorytellerInitialized]);
 
   return (
-    <div
-      id={id}
-      data-base-url={urlSafeCategories}
-      className="storyteller"
-    ></div>
+    <div ref={gridContainer}>
+      {title && (
+        <TitleAndMoreButton title={title} category={urlSafeCategories} />
+      )}
+      <div
+        id={id}
+        data-base-url={urlSafeCategories}
+        className="storyteller"
+      ></div>
+    </div>
   );
 }
 
