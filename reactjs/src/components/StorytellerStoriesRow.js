@@ -3,11 +3,19 @@ import { CellType, RowView } from '@getstoryteller/storyteller-sdk-javascript';
 
 import useStoryteller from '../hooks/useStoryteller';
 import getStorytellerTheme from '../helpers/themeManager';
+import TitleAndMoreButton from './TitleAndMoreButton';
 
-function StorytellerStoriesRow({ tileType, size, categories, displayLimit }) {
-  const urlSafeCategories = categories ? categories.join('-') : 'top';
+function StorytellerStoriesRow({
+  title,
+  tileType,
+  size,
+  categories,
+  displayLimit,
+}) {
+  const urlSafeCategories = categories ? categories.join('-') : 'home';
   const id = 'storyteller-stories-row-' + urlSafeCategories;
   const storyRow = useRef();
+  const rowContainer = useRef();
 
   let height = 140;
   switch (size) {
@@ -60,8 +68,8 @@ function StorytellerStoriesRow({ tileType, size, categories, displayLimit }) {
       // In general, we recommend this as a sensible approach in most cases
       onStoriesDataLoadComplete: (success, error, dataCount) => {
         if (error || dataCount === 0) {
-          if (storyRow && storyRow.current) {
-            storyRow.current.rootEl.style.display = 'none';
+          if (rowContainer && rowContainer.current) {
+            rowContainer.current.style.display = 'none';
           }
         }
       },
@@ -72,12 +80,20 @@ function StorytellerStoriesRow({ tileType, size, categories, displayLimit }) {
   // needs to have an explicit height set (as shown below) otherwise the
   // Storyteller Row will not render correctly
   return (
-    <div
-      id={id}
-      style={{ height: `${height}px` }}
-      data-base-url={urlSafeCategories}
-      className="storyteller"
-    ></div>
+    <div ref={rowContainer}>
+      {title && (
+        <TitleAndMoreButton
+          title={title}
+          category={urlSafeCategories}
+        />
+      )}
+      <div
+        id={id}
+        style={{ height: `${height}px` }}
+        data-base-url={urlSafeCategories}
+        className="storyteller"
+      ></div>
+    </div>
   );
 }
 

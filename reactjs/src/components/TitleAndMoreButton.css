@@ -1,0 +1,8 @@
+.title-and-more-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 1rem;
+}
