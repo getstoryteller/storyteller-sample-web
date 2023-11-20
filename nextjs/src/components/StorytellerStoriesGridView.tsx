@@ -38,6 +38,7 @@ const StorytellerStoriesGridView = ({
   const storyGrid = useRef<GridView>();
   const { isStorytellerInitialized } = useStoryteller();
   const { logUserActivityToAmplitude } = useAmplitudeTracker();
+
   useEffect(() => {
     if (!isStorytellerInitialized) {
       return;
@@ -100,6 +101,14 @@ const StorytellerStoriesGridView = ({
     logUserActivityToAmplitude,
     isStorytellerInitialized,
   ]);
+
+  useEffect(() => {
+    if (!storyGrid.current) {
+      return;
+    }
+    // Update the grid categories if needed
+    storyGrid.current.categories = categories;
+  }, [categories]);
 
   return (
     <>
