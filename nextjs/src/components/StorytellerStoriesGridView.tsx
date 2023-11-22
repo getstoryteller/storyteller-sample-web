@@ -67,6 +67,7 @@ const StorytellerStoriesGridView = ({
       getAdConfig: () => {
         return {
           slot: '/33813572/qa-ads',
+          customTargeting: {},
         };
       },
       // This callback is used to inform your code about actions which a user
