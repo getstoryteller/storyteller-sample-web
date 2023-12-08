@@ -130,8 +130,7 @@ const StorytellerStoriesRowView = ({
         id={id}
         style={{ height: `${height}px` }}
         data-base-url={urlSafeCategories}
-        className="pt-2 sm:pt-4"
-      ></div>
+      />
     </div>
   );
 };
