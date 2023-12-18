@@ -1,6 +1,6 @@
 {
   "name": "storyteller-web-sample-nextjs",
-  "version": "8.9.3",
+  "version": "8.9.4",
   "private": true,
   "scripts": {
     "format": "prettier --check --ignore-path .gitignore .",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.1.2",
-    "@getstoryteller/storyteller-sdk-javascript": "8.9.3",
+    "@getstoryteller/storyteller-sdk-javascript": "8.9.4",
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
     "@types/node": "20.3.3",
