@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Story,
-  sharedInstance as Storyteller,
-} from '@getstoryteller/storyteller-sdk-javascript';
+import { sharedInstance as Storyteller } from '@getstoryteller/storyteller-sdk-javascript';
 
 import { useEnvVariables } from '../hooks/useEnvVariables';
 
