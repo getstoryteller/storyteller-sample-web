@@ -48,9 +48,9 @@ const StorytellerStoriesRowView = ({
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-row-view
     //
-    // The row will display stories from the categories contained in the categories array
-    // For more information on stories and categories, please see
-    // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
+    // The row will display clips from the specified collection
+    // For more information on clips and collections, please see
+    // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
     clipsRow.current = new RowView(id, collection);
     clipsRow.current.configuration = RowView.ListConfiguration({
       displayLimit,

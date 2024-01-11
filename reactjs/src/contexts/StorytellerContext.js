@@ -42,7 +42,7 @@ const StorytellerContextProvider = ({ children }) => {
         // The Storyteller instance has a delegate object attached which allows your code
         // to take actions based on events which happen inside the Storyteller SDK
         // For more information on the various delegate callbacks, please see
-        // https://www.getstoryteller.com/documentation/web/storyteller-list-view-delegate
+        // https://www.getstoryteller.com/documentation/web/storyteller-delegate
         Storyteller.delegate = {
           // This callback is used to inform your code about actions which a user
           // takes inside Storyteller. Here we are logging the relevant information
