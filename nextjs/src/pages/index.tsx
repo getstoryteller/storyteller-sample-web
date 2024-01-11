@@ -1,14 +1,14 @@
 import { GetServerSideProps } from 'next';
-import { VerticalVideoList } from '@/models/content';
-import WebsiteHeader from '@/components/WebsiteHeader';
+import Head from 'next/head';
 import { User as StorytellerUser } from '@getstoryteller/storyteller-sdk-javascript';
+import { VerticalVideoList } from '@/models/content';
 import StorytellerContextProvider from '@/contexts/StorytellerContext';
-import StorytellerStoryUnit from '@/components/StorytellerStoryUnit';
-
-import './index.module.css';
 import AmplitudeContextProvider from '@/contexts/AmplitudeContext';
 import EnvVariablesContextProvider from '@/contexts/EnvVariablesContext';
-import Head from 'next/head';
+import StorytellerListView from '@/components/StorytellerListView';
+import WebsiteHeader from '@/components/WebsiteHeader';
+
+import './index.module.css';
 
 // This page fetches a list of "Vertical Video Lists" from an API
 // and renders them. This would be a common pattern if you were integrating
@@ -40,7 +40,7 @@ const Home = ({
             <WebsiteHeader />
             <main className="container mx-auto max-w-[1400px]">
               {verticalVideoLists.map((list: VerticalVideoList) => (
-                <StorytellerStoryUnit
+                <StorytellerListView
                   key={list.id}
                   list={list}
                   languageSetting={languageSetting}

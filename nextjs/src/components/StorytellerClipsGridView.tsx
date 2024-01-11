@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import {
-  StorytellerStoriesGridView as GridView,
+  StorytellerClipsGridView as GridView,
   UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
+import { useEffect, useRef } from 'react';
 import useStoryteller from '@/hooks/useStoryteller';
 import TitleAndMoreButton from '@/components/TitleAndMoreButton';
 
@@ -16,22 +16,21 @@ const FOUR_COLUMNS_LAYOUT = {
   },
 };
 
-interface StorytellerStoriesGridViewProps {
-  categories: string[];
+interface StorytellerClipsGridViewProps {
+  collection: string;
   title?: string | undefined;
   moreButtonTitle?: string | undefined;
   displayLimit?: number | undefined;
 }
 
-const StorytellerStoriesGridView = ({
-  categories,
+const StorytellerClipsGridView = ({
+  collection,
   title,
   displayLimit,
   moreButtonTitle,
-}: StorytellerStoriesGridViewProps) => {
-  const urlSafeCategories = categories.join('-');
-  const id = 'storyteller-stories-grid-view-' + urlSafeCategories;
-  const storyGrid = useRef<GridView>();
+}: StorytellerClipsGridViewProps) => {
+  const id = 'storyteller-clips-grid-view-' + collection;
+  const clipsGrid = useRef<GridView>();
   const { isStorytellerInitialized } = useStoryteller();
 
   useEffect(() => {
@@ -45,15 +44,15 @@ const StorytellerStoriesGridView = ({
     // The grid will display stories from the categories contained in the categories array
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyGrid.current = new GridView(id, categories);
-    storyGrid.current.configuration = GridView.ListConfiguration({
+    clipsGrid.current = new GridView(id, collection);
+    clipsGrid.current.configuration = GridView.ListConfiguration({
       displayLimit,
       theme: new UiTheme({
         light: FOUR_COLUMNS_LAYOUT,
         dark: FOUR_COLUMNS_LAYOUT,
       }),
     });
-  }, [id, categories, displayLimit, isStorytellerInitialized]);
+  }, [id, collection, displayLimit, isStorytellerInitialized]);
 
   return (
     <>
@@ -63,14 +62,14 @@ const StorytellerStoriesGridView = ({
           moreButtonTitle
             ? {
                 title: moreButtonTitle,
-                link: encodeURI(`/category/${urlSafeCategories}/${title}`),
+                link: encodeURI(`/collection/${collection}/${title}`),
               }
             : undefined
         }
       />
-      <div id={id} data-base-url={urlSafeCategories} />
+      <div id={id} data-base-url={collection} />
     </>
   );
 };
 
-export default StorytellerStoriesGridView;
+export default StorytellerClipsGridView;

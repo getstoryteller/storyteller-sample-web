@@ -4,11 +4,15 @@ import React, {
   PropsWithChildren,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from 'react';
-import { sharedInstance as Storyteller } from '@getstoryteller/storyteller-sdk-javascript';
+import {
+  sharedInstance as Storyteller,
+  type ActivityType,
+  type UserActivityData,
+} from '@getstoryteller/storyteller-sdk-javascript';
 import { useEnvVariables } from '@/hooks/useEnvVariables';
+import { useAmplitudeTracker } from '@/hooks/useAmplitudeTracker';
 
 // This file initializes the Storyteller SDK and makes sure this happens
 // only once per full page load.
@@ -28,27 +32,91 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
   const { storytellerApiKey } = useEnvVariables();
+  const { logUserActivityToAmplitude } = useAmplitudeTracker();
 
   const [isStorytellerInitialized, setIsStorytellerInitialized] =
     useState<boolean>(false);
 
   const initializeStoryteller = useCallback(
-    (userId: string | undefined = undefined) => {
+    (userId?: string) => {
       if (!storytellerApiKey) {
         throw new Error('Web SDK API key is not defined');
-      } else if (!isStorytellerInitialized) {
-        Storyteller.initialize(
-          storytellerApiKey,
-          {
-            externalId: userId,
-          },
-        ).then(() => {
+      }
+
+      if (!isStorytellerInitialized) {
+        // Handle page navigation
+        if (Storyteller.isInitialized) {
+          setIsStorytellerInitialized(true);
+          return;
+        }
+
+        Storyteller.initialize(storytellerApiKey, {
+          externalId: userId,
+        }).then(() => {
           setIsStorytellerInitialized(true);
           console.log('Storyteller initialized', Storyteller.version);
+
+          Storyteller.enableLogging();
+
+          // The Storyteller instance has a delegate object attached which allows your code
+          // to take actions based on events which happen inside the Storyteller SDK
+          // For more information on the various delegate callbacks, please see
+          // https://www.getstoryteller.com/documentation/web/storyteller-delegate
+          Storyteller.delegate = {
+            // This callback is used to inform your code about actions which a user
+            // takes inside Storyteller. This example shows how the data from this
+            // event can be sent to Amplitude for analytics purposes (but, of course,
+            // you could use any analytics provider you wish).
+            // For more information on the events and associated data, please see:
+            // https://www.getstoryteller.com/documentation/web/analytics
+            onUserActivityOccurred: (
+              type: ActivityType,
+              data: UserActivityData,
+            ) => {
+              logUserActivityToAmplitude(type, data);
+            },
+            // This callback allows you to specify the ad configuration for the Storyteller instance.
+            // For more information on how to configure Ads for the Storyteller Web SDK
+            // please see https://www.getstoryteller.com/documentation/web/ads
+            getAdConfig: () => {
+              return {
+                slot: '/33813572/qa-ads',
+                customTargeting: {},
+              };
+            },
+            // This callback is used to inform your code when a user taps a share
+            // button on any story. This example shows how to modify the URL which is
+            // shared before the share sheet is presented to the user.
+            onShareButtonTapped: (text: string, title: string, url: string) => {
+              return new Promise<void>((resolve, reject) => {
+                const shareUrl = new URL(url);
+                shareUrl.searchParams.append('utm_source', 'storyteller');
+                shareUrl.searchParams.append('utm_medium', 'share');
+                shareUrl.searchParams.append('utm_campaign', 'storyteller');
+
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      text: text,
+                      title: title,
+                      url: shareUrl.toString(),
+                    })
+                    .then(() => {
+                      resolve();
+                    })
+                    .catch((error) => {
+                      reject(error);
+                    });
+                } else {
+                  reject(new Error('Web Share API is not supported.'));
+                }
+              });
+            },
+          };
         });
       }
     },
-    [isStorytellerInitialized, storytellerApiKey],
+    [isStorytellerInitialized, logUserActivityToAmplitude, storytellerApiKey],
   );
 
   useEffect(() => {
