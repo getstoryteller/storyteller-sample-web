@@ -15,9 +15,9 @@ interface StorytellerStoriesRowViewProps {
   tileType: keyof typeof TileType;
   size: keyof typeof Size;
   categories: string[];
-  title?: string | undefined;
-  moreButtonTitle?: string | undefined;
-  displayLimit?: number | undefined;
+  title?: string;
+  moreButtonTitle?: string;
+  displayLimit?: number;
 }
 
 const StorytellerStoriesRowView = ({

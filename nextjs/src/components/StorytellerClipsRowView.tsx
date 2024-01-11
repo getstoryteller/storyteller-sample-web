@@ -13,9 +13,9 @@ import TitleAndMoreButton from '@/components/TitleAndMoreButton';
 interface StorytellerStoriesRowViewProps {
   size: keyof typeof Size;
   collection: string;
-  title?: string | undefined;
-  moreButtonTitle?: string | undefined;
-  displayLimit?: number | undefined;
+  title?: string;
+  moreButtonTitle?: string;
+  displayLimit?: number;
 }
 
 const StorytellerStoriesRowView = ({

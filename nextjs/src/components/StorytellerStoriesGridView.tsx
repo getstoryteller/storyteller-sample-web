@@ -18,9 +18,9 @@ const FOUR_COLUMNS_LAYOUT = {
 
 interface StorytellerStoriesGridViewProps {
   categories: string[];
-  title?: string | undefined;
-  moreButtonTitle?: string | undefined;
-  displayLimit?: number | undefined;
+  title?: string;
+  moreButtonTitle?: string;
+  displayLimit?: number;
 }
 
 const StorytellerStoriesGridView = ({

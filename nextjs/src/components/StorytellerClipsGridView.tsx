@@ -1,10 +1,10 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import {
   StorytellerClipsGridView as GridView,
   UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
-import { useEffect, useRef } from 'react';
 import useStoryteller from '@/hooks/useStoryteller';
 import TitleAndMoreButton from '@/components/TitleAndMoreButton';
 
@@ -18,9 +18,9 @@ const FOUR_COLUMNS_LAYOUT = {
 
 interface StorytellerClipsGridViewProps {
   collection: string;
-  title?: string | undefined;
-  moreButtonTitle?: string | undefined;
-  displayLimit?: number | undefined;
+  title?: string;
+  moreButtonTitle?: string;
+  displayLimit?: number;
 }
 
 const StorytellerClipsGridView = ({

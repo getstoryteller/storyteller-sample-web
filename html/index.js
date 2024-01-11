@@ -79,7 +79,7 @@
     // For more information on creating Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-row-view
     //
-    // The row will display clips from the collection with ID "game-stories"
+    // The row will display clips from the collection with ID "game-clips"
     // For more information on clips and collections, please see
     // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
     //

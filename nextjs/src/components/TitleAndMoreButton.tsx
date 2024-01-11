@@ -4,8 +4,7 @@ import Link from 'next/link';
 import type { Url } from 'next/dist/shared/lib/router/router';
 
 interface Props {
-  title?: string | undefined;
-  moreButtonTitle?: string | undefined;
+  title?: string;
   moreButton?: {
     title: string;
     link: Url;
