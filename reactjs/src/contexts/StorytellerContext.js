@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { sharedInstance as Storyteller } from '@getstoryteller/storyteller-sdk-javascript';
+import {
+  Story,
+  sharedInstance as Storyteller,
+} from '@getstoryteller/storyteller-sdk-javascript';
 
 import { useEnvVariables } from '../hooks/useEnvVariables';
 
@@ -24,17 +27,34 @@ const StorytellerContextProvider = ({ children }) => {
       if (!storytellerApiKey) {
         throw new Error('No Storyteller API key has been provided.');
       }
-      Storyteller
-        .initialize(storytellerApiKey, {
-          externalId: userId,
-        })
-        .then(() => {
-          setIsStorytellerInitialized(true);
-          console.log(
-            'Storyteller initialized',
-            Storyteller.version,
-          );
-        });
+
+      if (Storyteller.isInitialized) {
+        setIsStorytellerInitialized(true);
+        return;
+      }
+
+      Storyteller.initialize(storytellerApiKey, {
+        externalId: userId,
+      }).then(() => {
+        setIsStorytellerInitialized(true);
+        console.log('Storyteller initialized', Storyteller.version);
+
+        // The Storyteller instance has a delegate object attached which allows your code
+        // to take actions based on events which happen inside the Storyteller SDK
+        // For more information on the various delegate callbacks, please see
+        // https://www.getstoryteller.com/documentation/web/storyteller-list-view-delegate
+        Storyteller.delegate = {
+          // This callback is used to inform your code about actions which a user
+          // takes inside Storyteller. Here we are logging the relevant information
+          // to the console, but see the NextJS sample for an example of sending
+          // this data to Amplitude.
+          // For more information on the events and associated data, please see:
+          // https://www.getstoryteller.com/documentation/web/analytics
+          onUserActivityOccurred: (type, data) => {
+            console.log('Storyteller Activity Occurred', type, data);
+          },
+        };
+      });
     },
     [storytellerApiKey],
   );
