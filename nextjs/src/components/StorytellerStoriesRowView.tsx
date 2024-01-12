@@ -117,6 +117,14 @@ const StorytellerStoriesRowView = ({
     logUserActivityToAmplitude,
   ]);
 
+  useEffect(() => {
+    if (!storyRow.current) {
+      return;
+    }
+    // Update the grid categories if needed
+    storyRow.current.categories = categories;
+  }, [categories]);
+
   return (
     <div>
       {title && (
