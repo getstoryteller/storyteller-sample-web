@@ -2,35 +2,31 @@
 
 import { useEffect, useRef } from 'react';
 import {
-  CellType,
-  StorytellerStoriesRowView as RowView,
+  StorytellerClipsRowView as RowView,
   UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
-import { Size, TileType } from '@/models/content';
+import { Size } from '@/models/content';
 import buildBasicTheme from '@/helpers/buildBasicTheme';
 import useStoryteller from '@/hooks/useStoryteller';
 import TitleAndMoreButton from '@/components/TitleAndMoreButton';
 
 interface StorytellerStoriesRowViewProps {
-  tileType: keyof typeof TileType;
   size: keyof typeof Size;
-  categories: string[];
+  collection: string;
   title?: string;
   moreButtonTitle?: string;
   displayLimit?: number;
 }
 
 const StorytellerStoriesRowView = ({
-  tileType,
   size,
-  categories,
+  collection,
   title,
   displayLimit,
   moreButtonTitle,
 }: StorytellerStoriesRowViewProps) => {
-  const urlSafeCategories = categories.join('-');
-  const id = 'storyteller-stories-row-view-' + urlSafeCategories;
-  const storyRow = useRef<RowView>();
+  const id = 'storyteller-clips-row-view-' + collection;
+  const clipsRow = useRef<RowView>();
 
   let height = 140;
   switch (size) {
@@ -52,19 +48,18 @@ const StorytellerStoriesRowView = ({
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-row-view
     //
-    // The row will display stories from the categories contained in the categories array
-    // For more information on stories and categories, please see
-    // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyRow.current = new RowView(id, categories);
-    storyRow.current.configuration = RowView.ListConfiguration({
-      cellType: tileType === TileType.round ? CellType.round : CellType.square,
+    // The row will display clips from the specified collection
+    // For more information on clips and collections, please see
+    // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
+    clipsRow.current = new RowView(id, collection);
+    clipsRow.current.configuration = RowView.ListConfiguration({
       displayLimit,
       theme: new UiTheme({
         light: buildBasicTheme(),
         dark: buildBasicTheme(),
       }),
     });
-  }, [id, categories, displayLimit, tileType, isStorytellerInitialized]);
+  }, [id, collection, displayLimit, isStorytellerInitialized]);
 
   return (
     <div>
@@ -75,7 +70,7 @@ const StorytellerStoriesRowView = ({
             moreButtonTitle
               ? {
                   title: moreButtonTitle,
-                  link: encodeURI(`/category/${urlSafeCategories}/${title}`),
+                  link: encodeURI(`/collection/${collection}/${title}`),
                 }
               : undefined
           }
@@ -84,7 +79,7 @@ const StorytellerStoriesRowView = ({
       <div
         id={id}
         style={{ height: `${height}px` }}
-        data-base-url={urlSafeCategories}
+        data-base-url={collection}
       />
     </div>
   );

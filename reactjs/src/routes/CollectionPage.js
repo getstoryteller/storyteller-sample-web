@@ -1,17 +1,17 @@
 import { useParams } from 'react-router-dom';
 
 import StorytellerContextProvider from '../contexts/StorytellerContext';
-import StorytellerStoriesGrid from '../components/StorytellerStoriesGrid';
+import StorytellerClipsGrid from '../components/StorytellerClipsGrid';
 
-function CategoryPage() {
+function CollectionPage() {
   const { externalId } = useParams();
   return (
     <StorytellerContextProvider>
       <div className="content">
-        <StorytellerStoriesGrid categories={[externalId]} />
+        <StorytellerClipsGrid collection={externalId} />
       </div>
     </StorytellerContextProvider>
   );
 }
 
-export default CategoryPage;
+export default CollectionPage;

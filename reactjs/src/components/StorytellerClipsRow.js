@@ -1,23 +1,13 @@
 import { useEffect, useRef } from 'react';
-import {
-  CellType,
-  StorytellerStoriesRowView,
-} from '@getstoryteller/storyteller-sdk-javascript';
+import { StorytellerClipsRowView } from '@getstoryteller/storyteller-sdk-javascript';
 
 import useStoryteller from '../hooks/useStoryteller';
 import getStorytellerTheme from '../helpers/themeManager';
 import TitleAndMoreButton from './TitleAndMoreButton';
 
-function StorytellerStoriesRow({
-  title,
-  tileType,
-  size,
-  categories,
-  displayLimit,
-}) {
-  const urlSafeCategories = categories ? categories.join('-') : 'home';
-  const id = 'storyteller-stories-row-' + urlSafeCategories;
-  const storyRow = useRef();
+function StorytellerClipsRow({ title, size, collection, displayLimit }) {
+  const id = 'storyteller-clips-row-' + collection;
+  const clipsRow = useRef();
   const rowContainer = useRef();
 
   let height = 140;
@@ -39,26 +29,24 @@ function StorytellerStoriesRow({
       return;
     }
 
-    // This method creates a new Stories row, replacing the div with the id generated above
+    // This method creates a new Clips row, replacing the div with the id generated above
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-row-view
     //
-    // The row will display stories from the categories contained in the categories array
-    // For more information on stories and categories, please see
-    // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyRow.current = new StorytellerStoriesRowView(id, categories);
-    storyRow.current.configuration =
-      StorytellerStoriesRowView.ListConfiguration({
-        cellType: tileType === 'round' ? CellType.round : CellType.square,
-        displayLimit,
-        theme: getStorytellerTheme(),
-      });
+    // The row will display clips from the collection specified
+    // For more information on clips and collections, please see
+    // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
+    clipsRow.current = new StorytellerClipsRowView(id, collection);
+    clipsRow.current.configuration = StorytellerClipsRowView.ListConfiguration({
+      displayLimit,
+      theme: getStorytellerTheme(),
+    });
 
     // The Story Row has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK
     // For more information on the various delegate callbacks, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-list-view-delegate
-    storyRow.current.delegate = {
+    clipsRow.current.delegate = {
       // This function is called when the Story data has been loaded from our API
       // In the sample implementation, we check if there was an error or if no
       // stories were returned and if so, we find the relevant element and hide it
@@ -71,7 +59,7 @@ function StorytellerStoriesRow({
         }
       },
     };
-  }, [id, categories, displayLimit, tileType, isStorytellerInitialized]);
+  }, [id, collection, displayLimit, isStorytellerInitialized]);
 
   // Note that the div which is being used to render the Storyteller Row
   // needs to have an explicit height set (as shown below) otherwise the
@@ -83,18 +71,18 @@ function StorytellerStoriesRow({
           title={title}
           moreButton={{
             title: 'More',
-            link: encodeURI(`/category/${urlSafeCategories}`),
+            link: encodeURI(`/collection/${collection}`),
           }}
         />
       )}
       <div
         id={id}
         style={{ height: `${height}px` }}
-        data-base-url={urlSafeCategories}
+        data-base-url={collection}
         className="storyteller"
       ></div>
     </div>
   );
 }
 
-export default StorytellerStoriesRow;
+export default StorytellerClipsRow;

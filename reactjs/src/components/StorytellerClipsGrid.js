@@ -1,14 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { StorytellerStoriesGridView } from '@getstoryteller/storyteller-sdk-javascript';
+import { StorytellerClipsGridView } from '@getstoryteller/storyteller-sdk-javascript';
 
 import useStoryteller from '../hooks/useStoryteller';
 import getStorytellerTheme from '../helpers/themeManager';
 import TitleAndMoreButton from './TitleAndMoreButton';
 
-function StorytellerStoriesGrid({ title, categories, displayLimit }) {
-  const urlSafeCategories = categories ? categories.join('-') : 'home';
-  const id = 'storyteller-stories-grid-' + urlSafeCategories;
-  const storyGrid = useRef();
+function StorytellerClipsGrid({ title, collection, displayLimit }) {
+  const id = 'storyteller-clips-grid-' + collection;
+  const clipsGrid = useRef();
   const gridContainer = useRef();
 
   const { isStorytellerInitialized } = useStoryteller();
@@ -18,16 +17,16 @@ function StorytellerStoriesGrid({ title, categories, displayLimit }) {
       return;
     }
 
-    // This method creates a new Stories grid, replacing the div with the id generated above
+    // This method creates a new Clips grid, replacing the div with the id generated above
     // For more information on creating and configuring Storyteller lists, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-grid-view
     //
-    // The grid will display stories from the categories contained in the categories array
-    // For more information on stories and categories, please see
-    // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
-    storyGrid.current = new StorytellerStoriesGridView(id, categories);
-    storyGrid.current.configuration =
-      StorytellerStoriesGridView.ListConfiguration({
+    // The grid will display clips from the collection specified
+    // For more information on clips and collections, please see
+    // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
+    clipsGrid.current = new StorytellerClipsGridView(id, collection);
+    clipsGrid.current.configuration =
+      StorytellerClipsGridView.ListConfiguration({
         displayLimit,
         theme: getStorytellerTheme(),
       });
@@ -36,7 +35,7 @@ function StorytellerStoriesGrid({ title, categories, displayLimit }) {
     // to take actions based on events which happen inside the Storyteller SDK
     // For more information on the various delegate callbacks, please see
     // https://www.getstoryteller.com/documentation/web/storyteller-list-view-delegate
-    storyGrid.current.delegate = {
+    clipsGrid.current.delegate = {
       // This function is called when the Story data has been loaded from our API
       // In the sample implementation, we check if there was an error or if no
       // stories were returned and if so, we find the relevant element and hide it
@@ -49,7 +48,7 @@ function StorytellerStoriesGrid({ title, categories, displayLimit }) {
         }
       },
     };
-  }, [id, categories, displayLimit, isStorytellerInitialized]);
+  }, [id, collection, displayLimit, isStorytellerInitialized]);
 
   return (
     <div ref={gridContainer}>
@@ -58,17 +57,13 @@ function StorytellerStoriesGrid({ title, categories, displayLimit }) {
           title={title}
           moreButton={{
             title: 'More',
-            link: encodeURI(`/category/${urlSafeCategories}`),
+            link: encodeURI(`/collection/${collection}`),
           }}
         />
       )}
-      <div
-        id={id}
-        data-base-url={urlSafeCategories}
-        className="storyteller"
-      ></div>
+      <div id={id} data-base-url={collection} className="storyteller"></div>
     </div>
   );
 }
 
-export default StorytellerStoriesGrid;
+export default StorytellerClipsGrid;

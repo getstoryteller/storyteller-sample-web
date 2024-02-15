@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import './index.css';
 import IndexPage from './routes/IndexPage';
 import CategoryPage from './routes/CategoryPage';
+import CollectionPage from './routes/CollectionPage';
 import EnvVariablesContextProvider from './contexts/EnvVariablesContext';
+
+import '@getstoryteller/storyteller-sdk-javascript/dist/storyteller.min.css';
+import './index.css';
 
 const router = createBrowserRouter([
   {
@@ -14,11 +17,16 @@ const router = createBrowserRouter([
   },
   {
     path: '/category/:externalId',
-    element: <CategoryPage />
-  }
+    element: <CategoryPage />,
+  },
+  {
+    path: '/collection/:externalId',
+    element: <CollectionPage />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <EnvVariablesContextProvider

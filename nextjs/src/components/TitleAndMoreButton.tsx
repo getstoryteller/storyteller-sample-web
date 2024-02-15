@@ -1,24 +1,27 @@
 'use client';
 
 import Link from 'next/link';
+import type { Url } from 'next/dist/shared/lib/router/router';
 
 interface Props {
-  title?: string | undefined;
-  moreButtonTitle?: string | undefined;
-  category?: string | undefined;
+  title?: string;
+  moreButton?: {
+    title: string;
+    link: Url;
+  };
 }
 
-const TitleAndMoreButton = ({ title, moreButtonTitle, category }: Props) =>
-  title || moreButtonTitle ? (
+const TitleAndMoreButton = ({ title, moreButton }: Props) =>
+  title || moreButton ? (
     <div className="flex space-between row mt-8">
       {title && <h2 className="text-lg sm:text-2xl font-bold px-4">{title}</h2>}
-      {title && moreButtonTitle && (
+      {title && moreButton && (
         <div className="ml-auto">
           <Link
-            href={encodeURI(`/category/${category}/${title}`)}
+            href={moreButton.link}
             className="hover:underline pr-4 hover:text-white/[0.8] transition-all duration-200"
           >
-            {moreButtonTitle}
+            {moreButton.title}
           </Link>
         </div>
       )}
