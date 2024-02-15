@@ -7,6 +7,11 @@ const buildBasicTheme = () => ({
     primary: '#F75258',
   },
   font: 'Questrial, sans-serif',
+  lists: {
+    row: {
+      scrollIndicatorIcon: '/caret-forward-outline.svg',
+    },
+  },
 });
 
 export default buildBasicTheme;
