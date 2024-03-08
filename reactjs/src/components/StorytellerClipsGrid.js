@@ -25,11 +25,10 @@ function StorytellerClipsGrid({ title, collection, displayLimit }) {
     // For more information on clips and collections, please see
     // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
     clipsGrid.current = new StorytellerClipsGridView(id, collection);
-    clipsGrid.current.configuration =
-      StorytellerClipsGridView.ListConfiguration({
-        displayLimit,
-        theme: getStorytellerTheme(),
-      });
+    clipsGrid.current.configuration = {
+      displayLimit,
+      theme: getStorytellerTheme(),
+    };
 
     // The Story Grid has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK

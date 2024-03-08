@@ -37,10 +37,10 @@ function StorytellerClipsRow({ title, size, collection, displayLimit }) {
     // For more information on clips and collections, please see
     // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
     clipsRow.current = new StorytellerClipsRowView(id, collection);
-    clipsRow.current.configuration = StorytellerClipsRowView.ListConfiguration({
+    clipsRow.current.configuration = {
       displayLimit,
       theme: getStorytellerTheme(),
-    });
+    };
 
     // The Story Row has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK
