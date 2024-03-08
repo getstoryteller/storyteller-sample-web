@@ -45,13 +45,13 @@ const StorytellerClipsGridView = ({
     // For more information on clips and collections, please see
     // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
     clipsGrid.current = new GridView(id, collection);
-    clipsGrid.current.configuration = GridView.ListConfiguration({
+    clipsGrid.current.configuration = {
       displayLimit,
       theme: new UiTheme({
         light: FOUR_COLUMNS_LAYOUT,
         dark: FOUR_COLUMNS_LAYOUT,
       }),
-    });
+    };
   }, [id, collection, displayLimit, isStorytellerInitialized]);
 
   return (

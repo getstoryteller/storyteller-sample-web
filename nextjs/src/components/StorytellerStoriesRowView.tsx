@@ -56,14 +56,15 @@ const StorytellerStoriesRowView = ({
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
     storyRow.current = new RowView(id, categories);
-    storyRow.current.configuration = RowView.ListConfiguration({
+    storyRow.current.configuration = {
       cellType: tileType === TileType.round ? CellType.round : CellType.square,
       displayLimit,
+      preload: true,
       theme: new UiTheme({
         light: buildBasicTheme(),
         dark: buildBasicTheme(),
       }),
-    });
+    };
   }, [id, categories, displayLimit, tileType, isStorytellerInitialized]);
 
   return (

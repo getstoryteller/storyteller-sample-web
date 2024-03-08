@@ -52,13 +52,13 @@ const StorytellerStoriesRowView = ({
     // For more information on clips and collections, please see
     // https://www.getstoryteller.com/user-guide/clips-and-collections/creating-collections
     clipsRow.current = new RowView(id, collection);
-    clipsRow.current.configuration = RowView.ListConfiguration({
+    clipsRow.current.configuration = {
       displayLimit,
       theme: new UiTheme({
         light: buildBasicTheme(),
         dark: buildBasicTheme(),
       }),
-    });
+    };
   }, [id, collection, displayLimit, isStorytellerInitialized]);
 
   return (

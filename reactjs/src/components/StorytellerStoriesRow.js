@@ -47,12 +47,12 @@ function StorytellerStoriesRow({
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
     storyRow.current = new StorytellerStoriesRowView(id, categories);
-    storyRow.current.configuration =
-      StorytellerStoriesRowView.ListConfiguration({
-        cellType: tileType === 'round' ? CellType.round : CellType.square,
-        displayLimit,
-        theme: getStorytellerTheme(),
-      });
+    storyRow.current.configuration = {
+      cellType: tileType === 'round' ? CellType.round : CellType.square,
+      displayLimit,
+      preload: true,
+      theme: getStorytellerTheme(),
+    };
 
     // The Story Row has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK

@@ -26,11 +26,11 @@ function StorytellerStoriesGrid({ title, categories, displayLimit }) {
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
     storyGrid.current = new StorytellerStoriesGridView(id, categories);
-    storyGrid.current.configuration =
-      StorytellerStoriesGridView.ListConfiguration({
-        displayLimit,
-        theme: getStorytellerTheme(),
-      });
+    storyGrid.current.configuration = {
+      displayLimit,
+      preload: true,
+      theme: getStorytellerTheme(),
+    };
 
     // The Story Grid has a delegate object attached which allows your code
     // to take actions based on events which happen inside the Storyteller SDK
