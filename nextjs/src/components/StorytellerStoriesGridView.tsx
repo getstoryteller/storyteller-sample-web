@@ -46,13 +46,14 @@ const StorytellerStoriesGridView = ({
     // For more information on stories and categories, please see
     // https://www.getstoryteller.com/user-guide/stories-and-scheduling/categories
     storyGrid.current = new GridView(id, categories);
-    storyGrid.current.configuration = GridView.ListConfiguration({
+    storyGrid.current.configuration = {
       displayLimit,
+      preload: true,
       theme: new UiTheme({
         light: FOUR_COLUMNS_LAYOUT,
         dark: FOUR_COLUMNS_LAYOUT,
       }),
-    });
+    };
   }, [id, categories, displayLimit, isStorytellerInitialized]);
 
   return (
