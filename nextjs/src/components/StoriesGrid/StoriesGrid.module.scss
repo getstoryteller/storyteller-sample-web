@@ -1,0 +1,19 @@
+.storyGrid {
+  --grid-width: calc(100vw - var(--container-padding-inline) * 2);
+  --grid-item-width: calc(
+    (
+        var(--grid-width) -
+          (var(--tile-spacing, 8px) * (var(--grid-columns, 2) - 1))
+      ) / var(--grid-columns, 2)
+  );
+  --grid-item-height: calc(var(--grid-item-width) * (3 / 2));
+  --grid-height: calc(
+    (var(--grid-item-height) * var(--grid-rows, 1)) + var(--tile-spacing, 8px) *
+      (var(--grid-rows, 1) - 1)
+  );
+  min-height: var(--grid-height);
+
+  [data-status='success'] & {
+    min-height: unset;
+  }
+}

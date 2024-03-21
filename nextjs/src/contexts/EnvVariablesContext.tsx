@@ -1,23 +1,66 @@
-import React, { PropsWithChildren } from 'react';
+'use client';
+
+import { createContext, useEffect, useState, type ReactNode } from 'react';
+import {
+  getLocalStorageSetting,
+  LOCAL_STORAGE_KEYS,
+} from '@/helpers/getLocalStorageSetting';
 
 // This file is just boilerplate to make it easier to use environment variables in your app.
 
 interface EnvVariables {
-  storytellerApiKey?: string;
   amplitudeApiKey?: string;
+  setAmplitudeApiKey: (apiKey?: string) => void;
+  storytellerApiKey?: string;
+  setStorytellerApiKey: (apiKey?: string) => void;
 }
 
-export const EnvVariablesContext = React.createContext({
+export const EnvVariablesContext = createContext({
   amplitudeApiKey: undefined,
   storytellerApiKey: undefined,
 } as EnvVariables);
 
-const EnvVariablesContextProvider: React.FC<
-  PropsWithChildren<EnvVariables>
-> = ({ children, amplitudeApiKey, storytellerApiKey }) => {
+const EnvVariablesContextProvider = ({ children }: { children: ReactNode }) => {
+  const [amplitudeApiKey, _setAmplitudeApiKey] = useState<string>();
+  const [storytellerApiKey, _setStorytellerApiKey] = useState<string>();
+
+  useEffect(() => {
+    const storedStorytellerApiKey = getLocalStorageSetting(
+      LOCAL_STORAGE_KEYS.STORYTELLER,
+    );
+    const storedAmplitudeApiKey = getLocalStorageSetting(
+      LOCAL_STORAGE_KEYS.AMPLITUDE,
+    );
+
+    if (storedStorytellerApiKey) {
+      _setStorytellerApiKey(storedStorytellerApiKey);
+    }
+
+    if (storedAmplitudeApiKey) {
+      _setAmplitudeApiKey(storedAmplitudeApiKey);
+    }
+  }, []);
+
+  const setStorytellerApiKey = (apiKey?: string) => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.STORYTELLER, apiKey || '');
+
+    _setStorytellerApiKey(apiKey);
+  };
+
+  const setAmplitudeApiKey = (apiKey?: string) => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.AMPLITUDE, apiKey || '');
+
+    _setAmplitudeApiKey(apiKey);
+  };
+
   return (
     <EnvVariablesContext.Provider
-      value={{ amplitudeApiKey, storytellerApiKey }}
+      value={{
+        amplitudeApiKey,
+        setAmplitudeApiKey,
+        storytellerApiKey,
+        setStorytellerApiKey,
+      }}
     >
       {children}
     </EnvVariablesContext.Provider>

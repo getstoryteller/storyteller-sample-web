@@ -1,0 +1,30 @@
+.storyRow {
+  --row-height: 128px;
+  --row-tiles-spacing: 8px; // Also ROW_TILES_SPACING in buildResponsiveTheme.ts
+
+  @media (min-width: 450px) {
+    --row-tiles-spacing: 16px; // Also FULL_SCREEN_ROW_TILES_SPACING in buildResponsiveTheme.ts
+  }
+
+  &[data-size='regular'] {
+    @media (min-width: 400px) {
+      --row-height: var(--desktop-row-height, 140px);
+
+      &[data-cell-type='square'] {
+        --row-height: var(--desktop-row-height, 180px);
+      }
+    }
+  }
+
+  &[data-size='medium'] {
+    --row-height: 216px;
+
+    @media (min-width: 450px) {
+      --row-height: var(--desktop-row-height, 240px);
+    }
+  }
+
+  &[data-size='large'] {
+    --row-height: var(--desktop-row-height, 300px);
+  }
+}

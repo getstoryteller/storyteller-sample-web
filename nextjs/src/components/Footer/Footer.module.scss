@@ -1,0 +1,23 @@
+.footer {
+  font-size: 0.875rem;
+  background-color: var(--bg-level-1);
+  padding-inline: var(--container-padding-inline);
+
+  ol,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.footerRule {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: block;
+  background-color: var(--border);
+}

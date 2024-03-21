@@ -1,0 +1,30 @@
+@import 'src/styles/modules/mixins.scss';
+
+:root {
+  --bg-level-0: #f4f7fc;
+  --bg-level-1: #fff;
+
+  --border: #e8e8e9;
+
+  --text-contrast-100: #000000;
+  --text-contrast-80: #171a25;
+
+  --primary: rgb(28, 98, 235);
+
+  --tint: rgb(28, 98, 235);
+  --on-tint: #ffffff;
+
+  --container-width: min(calc(100vw - 32px), 800px);
+  --container-padding-block: 16px;
+  --container-padding-inline: calc((100vw - var(--container-width)) / 2);
+
+  @media (prefers-color-scheme: dark) {
+    --bg-level-0: #171a25;
+    --bg-level-1: rgb(255, 255, 255, 0.1);
+
+    --border: #262626;
+
+    --text-contrast-100: #ffffff;
+    --text-contrast-80: rgb(107, 124, 147);
+  }
+}

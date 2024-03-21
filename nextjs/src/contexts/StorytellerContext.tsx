@@ -1,10 +1,11 @@
 'use client';
 
-import React, {
-  PropsWithChildren,
+import {
+  createContext,
   useCallback,
   useEffect,
   useState,
+  type ReactNode,
 } from 'react';
 import {
   sharedInstance as Storyteller,
@@ -23,14 +24,15 @@ import { useAmplitudeTracker } from '@/hooks/useAmplitudeTracker';
 // There is more information about this in our documentation:
 // https://www.getstoryteller.com/documentation/web/users
 
-export const StorytellerContext = React.createContext({
+type StorytellerContextType = {
+  isStorytellerInitialized: boolean;
+};
+
+export const StorytellerContext = createContext<StorytellerContextType>({
   isStorytellerInitialized: false,
-  initializeStoryteller: (userId?: string) => {},
 });
 
-const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
-  children,
-}) => {
+const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
   const { storytellerApiKey } = useEnvVariables();
   const { logUserActivityToAmplitude } = useAmplitudeTracker();
 
@@ -40,16 +42,16 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
   const initializeStoryteller = useCallback(
     (userId?: string) => {
       if (!storytellerApiKey) {
-        throw new Error('Web SDK API key is not defined');
+        console.error('Web SDK API key is not defined');
+        return;
+      }
+
+      if (Storyteller.isInitialized) {
+        setIsStorytellerInitialized(true);
+        return;
       }
 
       if (!isStorytellerInitialized) {
-        // Handle page navigation
-        if (Storyteller.isInitialized) {
-          setIsStorytellerInitialized(true);
-          return;
-        }
-
         Storyteller.initialize(storytellerApiKey, {
           externalId: userId,
         }).then(() => {
@@ -126,9 +128,7 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
   }, [initializeStoryteller, isStorytellerInitialized]);
 
   return (
-    <StorytellerContext.Provider
-      value={{ isStorytellerInitialized, initializeStoryteller }}
-    >
+    <StorytellerContext.Provider value={{ isStorytellerInitialized }}>
       {children}
     </StorytellerContext.Provider>
   );
