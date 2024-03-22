@@ -1,10 +1,5 @@
 .storyRow {
   --row-height: 128px;
-  --row-tiles-spacing: 8px; // Also ROW_TILES_SPACING in buildResponsiveTheme.ts
-
-  @media (min-width: 450px) {
-    --row-tiles-spacing: 16px; // Also FULL_SCREEN_ROW_TILES_SPACING in buildResponsiveTheme.ts
-  }
 
   &[data-size='regular'] {
     @media (min-width: 400px) {

@@ -4,12 +4,16 @@ import { useContext, useEffect, useRef } from 'react';
 import {
   IListConfiguration,
   StorytellerClipsRowView,
-  UiStyle,
   UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
+import { useUiStyle } from '@/hooks/useUiStyle';
+import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { getCategoryParamFromName } from '@/helpers/getCategoryParam';
 import { StorytellerContext } from '@/contexts/StorytellerContext';
-import { buildBasicTheme } from '@/helpers/buildBasicTheme';
+import {
+  buildResponsiveLightTheme,
+  buildResponsiveDarkTheme,
+} from '@/helpers/buildResponsiveTheme';
 import { useViewStatus, ViewStatus } from '@/hooks/useViewStatus';
 import { StorytellerViewHeader } from '../StorytellerViewHeader/StorytellerViewHeader';
 
@@ -32,6 +36,8 @@ function ClipsRow({
   size = 'regular',
   title,
 }: StorytellerClipsRowViewProps) {
+  const { windowWidth } = useWindowWidth();
+  const { uiStyle } = useUiStyle();
   const { viewProps, setViewStatus: setClipsStatus } = useViewStatus();
   const { isStorytellerInitialized } = useContext(StorytellerContext);
   const clipsRow = useRef<StorytellerClipsRowView>();
@@ -74,14 +80,14 @@ function ClipsRow({
         basename,
         displayLimit,
         theme: new UiTheme({
-          light: buildBasicTheme(),
-          dark: buildBasicTheme(),
+          light: buildResponsiveLightTheme(windowWidth),
+          dark: buildResponsiveDarkTheme(windowWidth),
         }),
-        uiStyle: UiStyle.dark,
+        uiStyle,
       };
 
     clipsRow.current.configuration = clipsRowConfiguration;
-  }, [basename, displayLimit, isStorytellerInitialized]);
+  }, [basename, displayLimit, isStorytellerInitialized, uiStyle, windowWidth]);
 
   return (
     <article

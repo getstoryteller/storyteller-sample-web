@@ -1,23 +1,67 @@
+@import 'src/styles/modules/mixins.scss';
+
 .footer {
   font-size: 0.875rem;
-  background-color: var(--bg-level-1);
-  padding-inline: var(--container-padding-inline);
+  background-color: var(--bg-footer);
+  padding: 88px var(--container-padding-inline);
+  display: grid;
+  grid-gap: 40px;
+  margin-top: 4rem;
 
-  ol,
+  @include breakpoint(0, mobile) {
+    grid-auto-rows: auto;
+    text-align: center;
+    justify-items: center;
+  }
+
+  @include breakpoint(mobile, desktop) {
+    grid-template-columns: repeat(3, minmax(max-content, 180px));
+
+    .logo {
+      grid-column: 1 / span 3;
+    }
+  }
+
+  @include breakpoint(desktop) {
+    grid-template-columns: auto repeat(3, minmax(max-content, 180px));
+  }
+
+  h3 {
+    color: var(--text-footer-primary);
+    margin-bottom: 40px;
+  }
+
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
+
+    &.social {
+      display: flex;
+      color: var(--text-footer-primary);
+      margin-top: 24px;
+      gap: 16px;
+    }
   }
 
-  p {
-    margin: 0;
+  li {
+    font-weight: var(--font-weight-medium);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--text-footer-hover);
+    }
   }
 }
 
-.footerRule {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  display: block;
-  background-color: var(--border);
+.logo {
+  margin-top: 8px;
+}
+
+.links {
+  color: var(--text-footer-secondary);
+
+  li + li {
+    margin-top: 24px;
+  }
 }

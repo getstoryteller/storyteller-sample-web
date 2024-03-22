@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { CategoryHeader } from '@/components/CategoryHeader/CategoryHeader';
 import StoriesGrid from '@/components/StoriesGrid/StoriesGrid';
 import { useGetStorytellerViews } from '@/hooks/useGetStorytellerViews';
 import {
@@ -6,7 +7,7 @@ import {
   getCategoryParamFromName,
 } from '@/helpers/getCategoryParam';
 
-export default async function CategoryPage({
+export default function CategoryPage({
   params,
 }: {
   params: { category: string };
@@ -24,7 +25,7 @@ export default async function CategoryPage({
 
   return (
     <>
-      <h1>{categoryName}</h1>
+      <CategoryHeader title={categoryName} />
       <StoriesGrid
         basename={categories.join('-')}
         categories={categories}

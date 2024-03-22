@@ -1,21 +1,19 @@
 'use client';
 
-import { useEnvVariables } from '@/hooks/useEnvVariables';
-import {
-  getLocalStorageSetting,
-  LOCAL_STORAGE_KEYS,
-} from '@/helpers/getLocalStorageSetting';
+import { useRouter } from 'next/navigation';
+import { useUiStyle } from '@/hooks/useUiStyle';
+import { Button } from '@/components/Button/Button';
+import { SelectField } from '@/components/FormField/FormField';
 import { useSettingsForm } from './useSettingsForm';
-import type { ChangeEvent } from 'react';
+import type { UiStyle } from '@getstoryteller/storyteller-sdk-javascript';
 
 import styles from './SettingsForm.module.scss';
 
-export function SettingsForm({ onSubmit }: { onSubmit: () => void }) {
-  const { setStorytellerApiKey, setAmplitudeApiKey } = useEnvVariables();
-
+export function SettingsForm() {
+  const router = useRouter();
+  const { uiStyle, setUiStyle } = useUiStyle();
   const { formData, onFieldChange } = useSettingsForm({
-    storytellerApiKey: getLocalStorageSetting(LOCAL_STORAGE_KEYS.STORYTELLER),
-    amplitudeApiKey: getLocalStorageSetting(LOCAL_STORAGE_KEYS.AMPLITUDE),
+    uiStyle,
   });
 
   return (
@@ -23,40 +21,23 @@ export function SettingsForm({ onSubmit }: { onSubmit: () => void }) {
       className={styles.form}
       onSubmit={(e) => {
         e.preventDefault();
-        setStorytellerApiKey(formData.storytellerApiKey);
-        setAmplitudeApiKey(formData.amplitudeApiKey);
-        onSubmit();
+
+        setUiStyle(formData.uiStyle as UiStyle);
+        router.push('/');
       }}
     >
-      <TextField
-        label="Storyteller API key"
+      <SelectField
+        label="UI style"
+        name="uiStyle"
         onChange={onFieldChange}
-        placeholder="0000-0000-0000-0000"
-        value={formData.storytellerApiKey}
+        value={formData.uiStyle}
+        options={[
+          { label: 'Auto', value: 'auto' },
+          { label: 'Light', value: 'light' },
+          { label: 'Dark', value: 'dark' },
+        ]}
       />
-      <TextField
-        label="Amplitude API key"
-        onChange={onFieldChange}
-        placeholder="0000-0000-0000-0000"
-        value={formData.amplitudeApiKey}
-      />
-      <button type="submit">Apply changes</button>
+      <Button type="submit" label="Save changes" size="large" />
     </form>
-  );
-}
-
-type TextFieldProps = {
-  label: string;
-  placeholder: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-};
-
-function TextField({ label, ...inputProps }: TextFieldProps) {
-  return (
-    <label>
-      {label}
-      <input {...inputProps} />
-    </label>
   );
 }

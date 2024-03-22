@@ -1,0 +1,22 @@
+.settings {
+  --settings-padding-inline: 40px;
+  background-color: var(--bg-level-1);
+  border-radius: 6px;
+  box-shadow: 0px 24px 64px 0px rgba(22, 27, 45, 0.05);
+  max-width: 620px;
+  margin: 0 auto;
+
+  h2 {
+    border-bottom: 1px solid var(--border-low-contrast);
+    margin: 0;
+    padding: 24px var(--settings-padding-inline);
+  }
+
+  form {
+    padding: var(--settings-padding-inline);
+  }
+
+  button[type='submit'] {
+    max-width: max-content;
+  }
+}

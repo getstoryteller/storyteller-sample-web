@@ -5,12 +5,16 @@ import {
   CellType,
   IListConfiguration,
   StorytellerStoriesRowView,
-  UiStyle,
   UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
+import { useUiStyle } from '@/hooks/useUiStyle';
+import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { getCategoryParamFromName } from '@/helpers/getCategoryParam';
 import { StorytellerContext } from '@/contexts/StorytellerContext';
-import { buildBasicTheme } from '@/helpers/buildBasicTheme';
+import {
+  buildResponsiveLightTheme,
+  buildResponsiveDarkTheme,
+} from '@/helpers/buildResponsiveTheme';
 import { useViewStatus, ViewStatus } from '@/hooks/useViewStatus';
 import { StorytellerViewHeader } from '../StorytellerViewHeader/StorytellerViewHeader';
 import type { StorytellerView } from '@/api/getStorytellerViews';
@@ -38,6 +42,8 @@ function StoriesRow({
   size = 'regular',
   title,
 }: StorytellerStoriesRowViewProps) {
+  const { windowWidth } = useWindowWidth();
+  const { uiStyle } = useUiStyle();
   const { viewProps, setViewStatus: setStoriesStatus } = useViewStatus();
   const { isStorytellerInitialized } = useContext(StorytellerContext);
   const storyRow = useRef<StorytellerStoriesRowView>();
@@ -91,14 +97,21 @@ function StoriesRow({
         displayLimit,
         preload: true,
         theme: new UiTheme({
-          light: buildBasicTheme(),
-          dark: buildBasicTheme(),
+          light: buildResponsiveLightTheme(windowWidth),
+          dark: buildResponsiveDarkTheme(windowWidth),
         }),
-        uiStyle: UiStyle.dark,
+        uiStyle,
       };
 
     storyRow.current.configuration = storyRowConfiguration;
-  }, [basename, cellType, displayLimit, isStorytellerInitialized]);
+  }, [
+    basename,
+    cellType,
+    displayLimit,
+    isStorytellerInitialized,
+    uiStyle,
+    windowWidth,
+  ]);
 
   return (
     <article
@@ -127,7 +140,6 @@ function StoriesRow({
         style={
           {
             height: 'var(--row-height)',
-            '--storyteller-row-tile-spacing': 'var(--row-tiles-spacing, 8px)',
           } as CSSProperties
         }
         data-base-url={title ? getCategoryParamFromName(title) : basename}

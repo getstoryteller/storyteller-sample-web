@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { CategoryHeader } from '@/components/CategoryHeader/CategoryHeader';
 import ClipsGrid from '@/components/ClipsGrid/ClipsGrid';
 import { useGetStorytellerViews } from '@/hooks/useGetStorytellerViews';
 import {
@@ -6,7 +7,7 @@ import {
   getCategoryParamFromName,
 } from '@/helpers/getCategoryParam';
 
-export default async function CategoryPage({
+export default function CategoryPage({
   params,
 }: {
   params: { collection: string };
@@ -24,7 +25,7 @@ export default async function CategoryPage({
 
   return (
     <>
-      <h1>{collectionName}</h1>
+      <CategoryHeader title={collectionName} />
       <ClipsGrid
         basename={collection}
         collection={collection}

@@ -5,14 +5,16 @@ import {
   IListConfiguration,
   StorytellerStoriesGridView,
   UiTheme,
-  UiStyle,
 } from '@getstoryteller/storyteller-sdk-javascript';
+import { useUiStyle } from '@/hooks/useUiStyle';
+import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { StorytellerContext } from '@/contexts/StorytellerContext';
 import {
-  buildBasicTheme,
-  GRID_COLUMNS,
+  buildResponsiveLightTheme,
+  buildResponsiveDarkTheme,
   TILE_SPACING,
-} from '@/helpers/buildBasicTheme';
+  getGridColumns,
+} from '@/helpers/buildResponsiveTheme';
 import { useViewStatus, ViewStatus } from '@/hooks/useViewStatus';
 import { StorytellerViewHeader } from '../StorytellerViewHeader/StorytellerViewHeader';
 import { getCategoryParamFromName } from '@/helpers/getCategoryParam';
@@ -34,6 +36,8 @@ function StoriesGrid({
   moreButtonTitle,
   title,
 }: StorytellerStoriesGridViewProps) {
+  const { windowWidth } = useWindowWidth();
+  const { uiStyle } = useUiStyle();
   const { viewProps, setViewStatus: setStoriesStatus } = useViewStatus();
   const { isStorytellerInitialized } = useContext(StorytellerContext);
   const storyGrid = useRef<StorytellerStoriesGridView>();
@@ -77,16 +81,17 @@ function StoriesGrid({
         displayLimit,
         preload: true,
         theme: new UiTheme({
-          light: buildBasicTheme(),
-          dark: buildBasicTheme(),
+          light: buildResponsiveLightTheme(windowWidth),
+          dark: buildResponsiveDarkTheme(windowWidth),
         }),
-        uiStyle: UiStyle.dark,
+        uiStyle,
       };
 
     storyGrid.current.configuration = storyGridConfiguration;
-  }, [basename, displayLimit, isStorytellerInitialized]);
+  }, [basename, displayLimit, isStorytellerInitialized, uiStyle, windowWidth]);
 
-  const gridRows = Math.floor((displayLimit || 4) / GRID_COLUMNS);
+  const gridColumns = getGridColumns(windowWidth);
+  const gridRows = Math.floor((displayLimit || 4) / gridColumns);
 
   return (
     <article data-view-type="grid" {...viewProps}>
@@ -109,10 +114,11 @@ function StoriesGrid({
         data-base-url={title ? getCategoryParamFromName(title) : basename}
         className={styles.storyGrid}
         style={
+          // Check the StoriesGrid.module.scss file for a detailed explanation of what these properties are used for
           {
             '--tile-spacing': `${TILE_SPACING}px`,
-            '--grid-columns': displayLimit === 1 ? 1 : GRID_COLUMNS,
-            '--grid-rows': displayLimit === 1 ? 1 : gridRows,
+            '--grid-columns': gridColumns,
+            '--grid-rows': gridRows,
           } as CSSProperties
         }
       />

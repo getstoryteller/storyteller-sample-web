@@ -1,5 +1,5 @@
 @mixin breakpoint($min: 0, $max: 0) {
-  $known-breakpoints: desktop;
+  $known-breakpoints: desktop, tablet, mobile;
 
   @if not index($known-breakpoints, $min) and type-of($min) != number {
     @error "Unknown breakpoint #{$min}.";
@@ -14,12 +14,15 @@
   $maxValue: #{$max}px;
 
   $minBreakpoints: (
-    // Also FULL_SCREEN_BREAKPOINT in buildResponsiveTheme.ts
-    desktop: 1000px
+    desktop: 1200px,
+    tablet: 860px,
+    mobile: 480px,
   );
 
   $maxBreakpoints: (
-    desktop: 999.99px,
+    desktop: 1199.99px,
+    tablet: 859.99px,
+    mobile: 479.99px,
   );
 
   @if type-of($min) == string {

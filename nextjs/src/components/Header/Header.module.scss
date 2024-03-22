@@ -1,29 +1,35 @@
-.nav {
+@import 'src/styles/modules/mixins.scss';
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--container-padding-block) var(--container-padding-inline);
+  background-color: var(--bg-level-1);
+  margin-bottom: 40px;
 }
 
-.logo {
-  @media (prefers-color-scheme: dark) {
-    &[data-theme='light'] {
-      display: none;
-    }
-  }
-
-  @media (prefers-color-scheme: no-preference) {
-    &[data-theme='dark'] {
-      display: none;
-    }
-  }
-}
-
-.settingsBtn {
+.burgerMenu {
   position: relative;
-  z-index: 10;
+  color: var(--text-contrast-100);
+}
+
+.burgerIcon {
   cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: inherit;
   padding: 8px;
+  border-radius: 6px;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--tint);
+    color: var(--on-tint);
+  }
 
   svg {
     width: 24px;
@@ -31,24 +37,65 @@
   }
 }
 
-.settings {
-  position: fixed;
-  z-index: 5;
-  top: 0;
-  right: 0;
-  width: min(300px, 100vw);
-  height: 100vh;
-  background-color: var(--bg-level-0);
+.nav {
+  position: absolute;
+  z-index: 15;
+  background-color: var(--bg-level-1);
+  padding: 20px 40px;
+
+  @include breakpoint(0, desktop) {
+    width: 100vw;
+    right: calc(var(--container-padding-inline) * -1);
+  }
+
+  @include breakpoint(desktop) {
+    right: 0;
+    border-radius: 6px;
+    box-shadow: 0px 24px 64px 0px rgba(22, 27, 45, 0.05);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    min-width: max-content;
+  }
+
+  a,
+  button {
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    color: inherit;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--brand-primary);
+    }
+  }
 
   &[data-expanded='true'] {
-    transform: translateX(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 
   &[data-expanded='false'] {
-    transform: translateX(100%);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10%);
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    transition: transform 0.1s ease-in;
+    transition: all 150ms ease-in;
   }
 }

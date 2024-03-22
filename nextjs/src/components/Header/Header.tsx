@@ -1,65 +1,79 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Cog8ToothIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import { SettingsForm } from '../SettingsForm/SettingsForm';
+import { Bars3Icon } from '@heroicons/react/24/outline';
+import { useEnvVariables } from '@/hooks/useEnvVariables';
+import { Logo } from '@/components/Logo/Logo';
 
 import styles from './Header.module.scss';
 
 export function Header() {
-  const [isSettingsFormVisible, setIsSettingsFormVisible] =
-    useState<boolean>(false);
+  const { setStorytellerApiKey } = useEnvVariables();
+  const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const burgerIconRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    function handleClickOutsideDropdown(event: MouseEvent) {
+      const target = event.target as Node;
+      if (
+        burgerIconRef.current &&
+        dropdownRef.current &&
+        !burgerIconRef.current.contains(target) &&
+        !dropdownRef.current.contains(target)
+      ) {
+        setIsDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutsideDropdown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideDropdown);
+    };
+  }, [burgerIconRef, dropdownRef]);
 
   return (
     <>
-      <nav className={styles.nav} aria-label="Main navigation">
+      <header className={styles.header} aria-label="Main navigation">
         <Link href="/">
           <span className="sr-only">Storyteller demo</span>
-          <Image
-            className={styles.logo}
-            data-theme="light"
-            src="/storyteller-logo.svg"
-            alt="Storyteller Logo"
-            width={200}
-            height={40}
-            priority={true}
-          />
-          <Image
-            className={styles.logo}
-            data-theme="dark"
-            src="/storyteller-logo-light.svg"
-            alt="Storyteller Logo"
-            width={200}
-            height={40}
-            priority={true}
-          />
+          <Logo width={200} height={40} priority />
         </Link>
-        <button
-          className={styles.settingsBtn}
-          aria-expanded={isSettingsFormVisible ? 'true' : 'false'}
-          aria-controls="settings-form"
-          onClick={() => setIsSettingsFormVisible(!isSettingsFormVisible)}
-          title={`${isSettingsFormVisible ? 'Collapse' : 'Expand'} settings`}
-        >
-          {isSettingsFormVisible ? (
-            <XMarkIcon aria-hidden="true" />
-          ) : (
-            <Cog8ToothIcon aria-hidden="true" />
-          )}
-        </button>
-        {/* <UserOptions /> */}
-      </nav>
-      <div
-        className={styles.settings}
-        data-expanded={isSettingsFormVisible ? 'true' : 'false'}
-        id="settings-form"
-        role="region"
-        tabIndex={isSettingsFormVisible ? undefined : -1}
-      >
-        <SettingsForm onSubmit={() => setIsSettingsFormVisible(false)} />
-      </div>
+        <div className={styles.burgerMenu}>
+          <button
+            className={styles.burgerIcon}
+            aria-expanded={isDropdownVisible ? 'true' : 'false'}
+            aria-controls="nav"
+            onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+            title={`${isDropdownVisible ? 'Collapse' : 'Expand'} menu`}
+            ref={burgerIconRef}
+          >
+            <Bars3Icon aria-hidden="true" strokeWidth={2.5} />
+          </button>
+          <nav
+            className={styles.nav}
+            data-expanded={isDropdownVisible ? 'true' : 'false'}
+            id="nav"
+            tabIndex={isDropdownVisible ? undefined : -1}
+            ref={dropdownRef}
+          >
+            <ul>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/settings">Settings</Link>
+              </li>
+              <li>
+                <button onClick={() => setStorytellerApiKey('')}>
+                  Log out
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
     </>
   );
 }

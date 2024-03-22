@@ -3,8 +3,9 @@
 import { createContext, useEffect, useState, type ReactNode } from 'react';
 import {
   getLocalStorageSetting,
+  saveLocalStorageSetting,
   LOCAL_STORAGE_KEYS,
-} from '@/helpers/getLocalStorageSetting';
+} from '@/helpers/localStorage';
 
 // This file is just boilerplate to make it easier to use environment variables in your app.
 
@@ -26,10 +27,10 @@ const EnvVariablesContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const storedStorytellerApiKey = getLocalStorageSetting(
-      LOCAL_STORAGE_KEYS.STORYTELLER,
+      LOCAL_STORAGE_KEYS.STORYTELLER_API_KEY,
     );
     const storedAmplitudeApiKey = getLocalStorageSetting(
-      LOCAL_STORAGE_KEYS.AMPLITUDE,
+      LOCAL_STORAGE_KEYS.AMPLITUDE_API_KEY,
     );
 
     if (storedStorytellerApiKey) {
@@ -42,13 +43,13 @@ const EnvVariablesContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const setStorytellerApiKey = (apiKey?: string) => {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.STORYTELLER, apiKey || '');
+    saveLocalStorageSetting(LOCAL_STORAGE_KEYS.STORYTELLER_API_KEY, apiKey);
 
     _setStorytellerApiKey(apiKey);
   };
 
   const setAmplitudeApiKey = (apiKey?: string) => {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.AMPLITUDE, apiKey || '');
+    saveLocalStorageSetting(LOCAL_STORAGE_KEYS.AMPLITUDE_API_KEY, apiKey);
 
     _setAmplitudeApiKey(apiKey);
   };

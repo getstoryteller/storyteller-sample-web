@@ -4,11 +4,7 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding-bottom: calc(var(--views-gap, 0.8rem) * 0.5);
-
-  @include breakpoint(0, desktop) {
-    padding-right: var(--container-padding-inline);
-  }
+  padding-bottom: 16px;
 }
 
 .title {
@@ -16,15 +12,4 @@
   font-size: 1.5rem;
   line-height: 0.8;
   margin-block: 0;
-}
-
-.moreLink {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  svg {
-    width: 24px;
-    height: 24px;
-  }
 }

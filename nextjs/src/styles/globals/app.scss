@@ -10,10 +10,15 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-  padding: 0 var(--container-padding-inline) 4rem;
+  flex: 1;
+  padding: 0 var(--container-padding-inline);
 }
 
 a {
@@ -21,38 +26,21 @@ a {
   cursor: pointer;
 }
 
-button {
-  cursor: pointer;
-  border-radius: 4px;
-  background-color: var(--bg-level-1);
-  border-width: 0;
-  color: var(--text-contrast-100);
-  font-size: 1rem;
-  padding: 6px 12px;
-
-  &:hover,
-  &:focus-visible {
-    background-color: var(--text-contrast-100);
-    color: var(--bg-level-0);
-  }
+h1,
+h2,
+h3 {
+  text-transform: capitalize;
+  font-weight: var(--font-weight-medium);
 }
 
 h1,
-h1 {
-  text-transform: uppercase;
-}
-
-h1 {
-  font-size: 2rem;
-}
-
 h2 {
   font-size: 1.5rem;
   line-height: 0.8;
 }
 
-input {
-  font-size: 1rem;
+p {
+  color: var(--text-contrast-80);
 }
 
 *[data-status='error'] {
@@ -60,5 +48,5 @@ input {
 }
 
 article + article {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }

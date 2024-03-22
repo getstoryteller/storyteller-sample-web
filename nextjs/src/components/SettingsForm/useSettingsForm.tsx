@@ -1,8 +1,7 @@
 import { useReducer, type ChangeEvent } from 'react';
 
 type SettingsFormData = {
-  amplitudeApiKey: string;
-  storytellerApiKey: string;
+  uiStyle: string;
 };
 
 type SettingsReducerAction = {
@@ -27,10 +26,12 @@ function demoReducer(
   }
 }
 
-export function useSettingsForm(initialValue: SettingsFormData) {
-  const [formData, dispatch] = useReducer(demoReducer, initialValue);
+export function useSettingsForm(initialFormData: SettingsFormData) {
+  const [formData, dispatch] = useReducer(demoReducer, initialFormData);
 
-  const onFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onFieldChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     dispatch({
       type: 'EDIT',
       field: e.target.name as keyof SettingsFormData,

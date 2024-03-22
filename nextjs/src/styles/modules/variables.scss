@@ -1,30 +1,51 @@
 @import 'src/styles/modules/mixins.scss';
 
 :root {
-  --bg-level-0: #f4f7fc;
-  --bg-level-1: #fff;
+  --bg-level-0: rgba(248, 248, 250, 1);
+  --bg-level-1: rgba(255, 255, 255, 1);
 
-  --border: #e8e8e9;
+  --border-high-contrast: rgba(205, 208, 220, 1);
+  --border-low-contrast: rgba(66, 75, 106, 0.1);
 
-  --text-contrast-100: #000000;
-  --text-contrast-80: #171a25;
+  --text-contrast-100: rgba(23, 26, 37, 1);
+  --text-contrast-80: rgba(66, 75, 106, 1);
+  --text-contrast-60: rgba(76, 85, 119, 1);
 
-  --primary: rgb(28, 98, 235);
+  --brand-primary: rgba(28, 98, 235, 1);
+  --brand-primary-outline: rgba(28, 98, 235, 0.2);
 
-  --tint: rgb(28, 98, 235);
-  --on-tint: #ffffff;
+  --on-brand-primary: rgba(255, 255, 255, 1);
 
-  --container-width: min(calc(100vw - 32px), 800px);
+  --bg-footer: rgba(23, 26, 37, 1);
+  --text-footer-primary: rgba(255, 255, 255, 1);
+  --text-footer-secondary: rgba(255, 255, 255, 0.8);
+  --text-footer-hover: #b1c7f1;
+
+  --error: rgba(210, 71, 71, 1);
+  --error-outline: rgba(210, 71, 71, 0.2);
+
+  --tint: rgba(235, 242, 253, 1);
+  --on-tint: rgba(25, 91, 219, 1);
+
+  --container-width: min(calc(100vw - 32px), 1280px);
   --container-padding-block: 16px;
   --container-padding-inline: calc((100vw - var(--container-width)) / 2);
 
-  @media (prefers-color-scheme: dark) {
-    --bg-level-0: #171a25;
-    --bg-level-1: rgb(255, 255, 255, 0.1);
+  --button-radius: 46px;
 
-    --border: #262626;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
 
-    --text-contrast-100: #ffffff;
-    --text-contrast-80: rgb(107, 124, 147);
+  [data-theme='dark'] {
+    --bg-level-0: #0d101b;
+    --bg-level-1: rgba(23, 26, 37, 1);
+
+    --text-contrast-100: rgba(255, 255, 255, 1);
+    --text-contrast-80: rgba(255, 255, 255, 0.8);
+
+    --tint: #0c2d6d;
+    --on-tint: rgb(255, 255, 255);
   }
 }
