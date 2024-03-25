@@ -1,14 +1,48 @@
+$input-radius: 4px;
+
 .input,
-.label {
-  width: 100%;
-  color: var(--text-contrast-100);
+.label,
+.inputGroup button {
   font-size: 1rem;
   font-weight: var(--font-weight-regular);
 }
 
 .label {
-  .input {
+  color: var(--text-contrast-100);
+  width: 100%;
+
+  .inputGroup {
     margin-top: 4px;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  width: 100%;
+  border-radius: $input-radius;
+
+  &:has(button) {
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  button {
+    border-radius: 0 $input-radius $input-radius 0;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
+
+  &:focus-within {
+    outline: 3px solid var(--brand-primary-outline);
+
+    &:has(.input[aria-invalid='true']) {
+      outline: 3px solid var(--error-outline);
+    }
   }
 }
 
@@ -17,12 +51,14 @@
   --input-icon-padding: 12px;
   background-color: var(--bg-level-1);
   border: 1px solid var(--border-high-contrast);
-  border-radius: 4px;
+  border-radius: $input-radius;
+  color: var(--text-contrast-100);
   padding: 16px;
+  width: 100%;
 
   &:focus-visible {
     border-color: var(--brand-primary);
-    outline: 3px solid var(--brand-primary-outline);
+    outline: none;
   }
 
   ::placeholder {
@@ -42,10 +78,6 @@
       (var(--input-icon-padding) * 2) + var(--input-icon-size)
     );
     border-color: var(--error);
-
-    &:focus-visible {
-      outline: 3px solid var(--error-outline);
-    }
   }
 }
 

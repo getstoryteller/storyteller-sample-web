@@ -1,0 +1,23 @@
+.form {
+  --form-padding-inline: 40px;
+  background-color: var(--bg-level-1);
+  border-radius: var(--container-radius);
+  box-shadow: var(--container-shadow);
+
+  h2 {
+    border-bottom: 1px solid var(--border-low-contrast);
+    margin: 0;
+    padding: 24px var(--form-padding-inline);
+  }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: var(--form-padding-inline);
+
+    & > * {
+      flex: 1;
+    }
+  }
+}

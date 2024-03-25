@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useState,
+  useRef,
   type ReactNode,
 } from 'react';
 import {
@@ -26,10 +27,12 @@ import { useAmplitudeTracker } from '@/hooks/useAmplitudeTracker';
 
 type StorytellerContextType = {
   isStorytellerInitialized: boolean;
+  storytellerInstance: typeof Storyteller | null;
 };
 
 export const StorytellerContext = createContext<StorytellerContextType>({
   isStorytellerInitialized: false,
+  storytellerInstance: null,
 });
 
 const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
@@ -38,6 +41,8 @@ const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
 
   const [isStorytellerInitialized, setIsStorytellerInitialized] =
     useState<boolean>(false);
+
+  let storytellerInstance = useRef<typeof Storyteller | null>(null);
 
   const initializeStoryteller = useCallback(
     (userId?: string) => {
@@ -48,6 +53,7 @@ const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
 
       if (Storyteller.isInitialized) {
         setIsStorytellerInitialized(true);
+        storytellerInstance.current = Storyteller;
         return;
       }
 
@@ -57,6 +63,7 @@ const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
         }).then(() => {
           setIsStorytellerInitialized(true);
           console.log('Storyteller initialized', Storyteller.version);
+          storytellerInstance.current = Storyteller;
 
           Storyteller.enableLogging();
 
@@ -128,7 +135,12 @@ const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
   }, [initializeStoryteller, isStorytellerInitialized]);
 
   return (
-    <StorytellerContext.Provider value={{ isStorytellerInitialized }}>
+    <StorytellerContext.Provider
+      value={{
+        isStorytellerInitialized,
+        storytellerInstance: storytellerInstance.current,
+      }}
+    >
       {children}
     </StorytellerContext.Provider>
   );

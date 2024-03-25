@@ -3,6 +3,8 @@ import type {
   DetailedHTMLProps,
   InputHTMLAttributes,
 } from 'react';
+import { Button } from '@/components/Button/Button';
+import type { ButtonProps } from '@/components/Button/types';
 
 import styles from './FormField.module.scss';
 
@@ -14,22 +16,31 @@ type FormFieldProps = {
 };
 
 type TextFieldProps = {
+  buttonProps?: ButtonProps;
   error?: string;
   placeholder: string;
 } & FormFieldProps &
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-export function TextField({ error, label, ...inputProps }: TextFieldProps) {
+export function TextField({
+  buttonProps,
+  error,
+  label,
+  ...inputProps
+}: TextFieldProps) {
   return (
     <div>
       <label className={styles.label}>
         {label}
-        <input
-          className={styles.input}
-          aria-invalid={error ? 'true' : undefined}
-          aria-describedby={error ? `${inputProps.name}-Error` : undefined}
-          {...inputProps}
-        />
+        <div className={styles.inputGroup}>
+          <input
+            className={styles.input}
+            aria-invalid={error ? 'true' : undefined}
+            aria-describedby={error ? `${inputProps.name}-Error` : undefined}
+            {...inputProps}
+          />
+          {buttonProps && <Button {...buttonProps} />}
+        </div>
       </label>
       {error && (
         <p id={`${inputProps.name}-Error`} className={styles.error}>
@@ -53,13 +64,15 @@ export function SelectField({
     <div>
       <label className={styles.label}>
         {label}
-        <select className={styles.input} {...inputProps}>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        <div className={styles.inputGroup}>
+          <select className={styles.input} {...inputProps}>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </label>
     </div>
   );

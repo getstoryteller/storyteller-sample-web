@@ -47,6 +47,9 @@ p {
   display: none;
 }
 
-article + article {
-  margin-top: 1.5rem;
+article {
+  & + article,
+  & + section {
+    margin-top: 1.5rem;
+  }
 }
