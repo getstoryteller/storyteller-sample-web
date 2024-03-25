@@ -1,25 +1,15 @@
 'use client';
 
-import { useContext, useEffect, useRef, type CSSProperties } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import {
   IListConfiguration,
   StorytellerStoriesGridView,
-  UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
 import { useUiStyle } from '@/hooks/useUiStyle';
-import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { StorytellerContext } from '@/contexts/StorytellerContext';
-import {
-  buildResponsiveLightTheme,
-  buildResponsiveDarkTheme,
-  TILE_SPACING,
-  getGridColumns,
-} from '@/helpers/buildResponsiveTheme';
 import { useViewStatus, ViewStatus } from '@/hooks/useViewStatus';
 import { StorytellerViewHeader } from '../StorytellerViewHeader/StorytellerViewHeader';
 import { getCategoryParamFromName } from '@/helpers/getCategoryParam';
-
-import styles from './StoriesGrid.module.scss';
 
 interface StorytellerStoriesGridViewProps {
   basename: string;
@@ -36,7 +26,6 @@ function StoriesGrid({
   moreButtonTitle,
   title,
 }: StorytellerStoriesGridViewProps) {
-  const { windowWidth } = useWindowWidth();
   const { uiStyle } = useUiStyle();
   const { viewProps, setViewStatus: setStoriesStatus } = useViewStatus();
   const { isStorytellerInitialized } = useContext(StorytellerContext);
@@ -80,21 +69,14 @@ function StoriesGrid({
         basename,
         displayLimit,
         preload: true,
-        theme: new UiTheme({
-          light: buildResponsiveLightTheme(windowWidth),
-          dark: buildResponsiveDarkTheme(windowWidth),
-        }),
         uiStyle,
       };
 
     storyGrid.current.configuration = storyGridConfiguration;
-  }, [basename, displayLimit, isStorytellerInitialized, uiStyle, windowWidth]);
-
-  const gridColumns = getGridColumns(windowWidth);
-  const gridRows = Math.floor((displayLimit || 4) / gridColumns);
+  }, [basename, displayLimit, isStorytellerInitialized, uiStyle]);
 
   return (
-    <article data-view-type="grid" {...viewProps}>
+    <article {...viewProps}>
       {title && (
         <StorytellerViewHeader
           title={title}
@@ -112,15 +94,6 @@ function StoriesGrid({
       <div
         id={basename}
         data-base-url={title ? getCategoryParamFromName(title) : basename}
-        className={styles.storyGrid}
-        style={
-          // Check the StoriesGrid.module.scss file for a detailed explanation of what these properties are used for
-          {
-            '--tile-spacing': `${TILE_SPACING}px`,
-            '--grid-columns': gridColumns,
-            '--grid-rows': gridRows,
-          } as CSSProperties
-        }
       />
     </article>
   );

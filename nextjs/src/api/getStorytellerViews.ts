@@ -1,7 +1,7 @@
 import { CellType } from '@getstoryteller/storyteller-sdk-javascript';
 
 export type StorytellerView = {
-  categories?: string[];
+  categories: string[];
   collection?: string;
   count?: number;
   id: string;

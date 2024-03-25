@@ -10,9 +10,15 @@ import {
 } from 'react';
 import {
   sharedInstance as Storyteller,
+  UiTheme,
   type ActivityType,
   type UserActivityData,
 } from '@getstoryteller/storyteller-sdk-javascript';
+import {
+  buildResponsiveDarkTheme,
+  buildResponsiveLightTheme,
+} from '@/helpers/buildResponsiveTheme';
+import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { useEnvVariables } from '@/hooks/useEnvVariables';
 import { useAmplitudeTracker } from '@/hooks/useAmplitudeTracker';
 
@@ -36,6 +42,7 @@ export const StorytellerContext = createContext<StorytellerContextType>({
 });
 
 const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
+  const { windowWidth } = useWindowWidth();
   const { storytellerApiKey } = useEnvVariables();
   const { logUserActivityToAmplitude } = useAmplitudeTracker();
 
@@ -51,13 +58,14 @@ const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      if (Storyteller.isInitialized) {
-        setIsStorytellerInitialized(true);
-        storytellerInstance.current = Storyteller;
-        return;
-      }
-
       if (!isStorytellerInitialized) {
+        // Reuse the same Storyteller instance on route change
+        if (Storyteller.isInitialized) {
+          setIsStorytellerInitialized(true);
+          storytellerInstance.current = Storyteller;
+          return;
+        }
+
         Storyteller.initialize(storytellerApiKey, {
           externalId: userId,
         }).then(() => {
@@ -127,6 +135,15 @@ const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
     },
     [isStorytellerInitialized, logUserActivityToAmplitude, storytellerApiKey],
   );
+
+  useEffect(() => {
+    if (isStorytellerInitialized && storytellerInstance.current) {
+      storytellerInstance.current.theme = new UiTheme({
+        light: buildResponsiveLightTheme(windowWidth),
+        dark: buildResponsiveDarkTheme(windowWidth),
+      });
+    }
+  }, [storytellerInstance, isStorytellerInitialized, windowWidth]);
 
   useEffect(() => {
     if (!isStorytellerInitialized) {

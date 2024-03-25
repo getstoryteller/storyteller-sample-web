@@ -27,8 +27,8 @@
 
   &:hover,
   &:focus-visible {
-    background-color: var(--tint);
-    color: var(--on-tint);
+    background-color: var(--brand-primary);
+    color: var(--on-brand-primary);
   }
 
   svg {

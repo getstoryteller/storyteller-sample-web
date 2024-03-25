@@ -5,16 +5,10 @@ import {
   CellType,
   IListConfiguration,
   StorytellerStoriesRowView,
-  UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
 import { useUiStyle } from '@/hooks/useUiStyle';
-import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { getCategoryParamFromName } from '@/helpers/getCategoryParam';
 import { StorytellerContext } from '@/contexts/StorytellerContext';
-import {
-  buildResponsiveLightTheme,
-  buildResponsiveDarkTheme,
-} from '@/helpers/buildResponsiveTheme';
 import { useViewStatus, ViewStatus } from '@/hooks/useViewStatus';
 import { StorytellerViewHeader } from '../StorytellerViewHeader/StorytellerViewHeader';
 import type { StorytellerView } from '@/api/getStorytellerViews';
@@ -42,7 +36,6 @@ function StoriesRow({
   size = 'regular',
   title,
 }: StorytellerStoriesRowViewProps) {
-  const { windowWidth } = useWindowWidth();
   const { uiStyle } = useUiStyle();
   const { viewProps, setViewStatus: setStoriesStatus } = useViewStatus();
   const { isStorytellerInitialized } = useContext(StorytellerContext);
@@ -96,28 +89,16 @@ function StoriesRow({
         cellType,
         displayLimit,
         preload: true,
-        theme: new UiTheme({
-          light: buildResponsiveLightTheme(windowWidth),
-          dark: buildResponsiveDarkTheme(windowWidth),
-        }),
         uiStyle,
       };
 
     storyRow.current.configuration = storyRowConfiguration;
-  }, [
-    basename,
-    cellType,
-    displayLimit,
-    isStorytellerInitialized,
-    uiStyle,
-    windowWidth,
-  ]);
+  }, [basename, cellType, displayLimit, isStorytellerInitialized, uiStyle]);
 
   return (
     <article
       className={styles.storyRow}
       data-size={size}
-      data-view-type="row"
       data-cell-type={cellType}
       {...viewProps}
     >

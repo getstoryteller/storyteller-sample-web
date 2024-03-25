@@ -5,7 +5,7 @@ import AmplitudeContextProvider from '@/contexts/AmplitudeContext';
 import EnvVariablesContext from '@/contexts/EnvVariablesContext';
 import StorytellerContextProvider from '@/contexts/StorytellerContext';
 import UiStyleContextProvider from '@/contexts/UiStyleContext';
-import { ApiKeyForm, Footer, Header } from '@/components';
+import { ApiKeyGuard, Footer, Header } from '@/components';
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 
@@ -58,11 +58,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               className={`${euclid.variable} ${storytellerFont.variable}`}
             >
               <body>
-                <ApiKeyForm>
+                <ApiKeyGuard>
                   <Header />
                   <main>{children}</main>
                   <Footer />
-                </ApiKeyForm>
+                </ApiKeyGuard>
               </body>
             </html>
           </UiStyleContextProvider>

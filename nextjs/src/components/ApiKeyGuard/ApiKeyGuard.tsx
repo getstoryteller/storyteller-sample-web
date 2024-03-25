@@ -7,11 +7,11 @@ import { TextField } from '@/components/FormField/FormField';
 import { Button } from '@/components/Button/Button';
 import { Logo } from '@/components/Logo/Logo';
 
-import styles from './ApiKeyForm.module.scss';
+import styles from './ApiKeyGuard.module.scss';
 
 type LoginState = 'loading' | 'logged-in' | 'logged-out';
 
-export function ApiKeyForm({ children }: { children: ReactNode }) {
+export function ApiKeyGuard({ children }: { children: ReactNode }) {
   const [loginState, setLoginState] = useState<LoginState>('loading');
   const { storytellerApiKey, setStorytellerApiKey } = useEnvVariables();
   const [apiKey, setApiKey] = useState<string>('');
@@ -49,8 +49,6 @@ export function ApiKeyForm({ children }: { children: ReactNode }) {
           <TextField
             autoComplete="current-password"
             name="apiKey"
-            // @todo validation?
-            // error="The access code you entered is incorrect. Please double-check your code and try again."
             label="API key"
             onChange={(e) => setApiKey(e.target.value)}
             placeholder="0000-0000-0000-0000"

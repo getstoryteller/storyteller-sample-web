@@ -39,7 +39,6 @@ export default function StorytellerMethods() {
             onClick: () => Storyteller.openStory(storyId),
           }}
         />
-
         <TextField
           label="Page ID"
           name="pageId"

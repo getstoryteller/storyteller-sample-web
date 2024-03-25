@@ -18,7 +18,7 @@ export function StorytellerViewHeader({
   title,
 }: StorytellerViewHeaderProps) {
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <h2 className={styles.title}>{title}</h2>
       {moreButton && (
         <Button
@@ -29,6 +29,6 @@ export function StorytellerViewHeader({
           variant="tint"
         />
       )}
-    </div>
+    </header>
   );
 }

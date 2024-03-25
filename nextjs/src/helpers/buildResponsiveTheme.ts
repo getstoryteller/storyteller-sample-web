@@ -8,9 +8,7 @@ import {
 // For more details on the various properties, please refer to the documentation at
 // https://www.getstoryteller.com/documentation/web/themes
 
-export const TILE_SPACING = 8;
-
-export const getGridColumns = (windowWidth: number) => {
+const getGridColumns = (windowWidth: number) => {
   switch (true) {
     case windowWidth >= 860:
       return 4;
@@ -29,13 +27,13 @@ const buildResponsiveTheme = (windowWidth: number) => ({
   lists: {
     backgroundColor: 'var(--bg-level-0)',
     row: {
-      tileSpacing: TILE_SPACING,
+      tileSpacing: 8,
       scrollIndicatorFade: true,
       endInset: 0,
       startInset: 0,
     },
     grid: {
-      tileSpacing: TILE_SPACING,
+      tileSpacing: 8,
       columns: getGridColumns(windowWidth),
       endInset: 0,
       startInset: 0,

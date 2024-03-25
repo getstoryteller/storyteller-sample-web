@@ -60,13 +60,25 @@ export function Header() {
           >
             <ul>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/" onClick={() => setIsDropdownVisible(false)}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link href="/settings">Settings</Link>
+                <Link
+                  href="/settings"
+                  onClick={() => setIsDropdownVisible(false)}
+                >
+                  Settings
+                </Link>
               </li>
               <li>
-                <button onClick={() => setStorytellerApiKey('')}>
+                <button
+                  onClick={() => {
+                    setIsDropdownVisible(false);
+                    setStorytellerApiKey('');
+                  }}
+                >
                   Log out
                 </button>
               </li>

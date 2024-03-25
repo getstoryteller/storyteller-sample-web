@@ -1,26 +1,7 @@
-import type {
-  ChangeEvent,
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-} from 'react';
 import { Button } from '@/components/Button/Button';
-import type { ButtonProps } from '@/components/Button/types';
+import { SelectFieldProps, TextFieldProps } from './types';
 
 import styles from './FormField.module.scss';
-
-type FormFieldProps = {
-  label: string;
-  name: string;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  value: string;
-};
-
-type TextFieldProps = {
-  buttonProps?: ButtonProps;
-  error?: string;
-  placeholder: string;
-} & FormFieldProps &
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 export function TextField({
   buttonProps,
@@ -50,10 +31,6 @@ export function TextField({
     </div>
   );
 }
-
-type SelectFieldProps = FormFieldProps & {
-  options: { label: string; value: string }[];
-};
 
 export function SelectField({
   label,

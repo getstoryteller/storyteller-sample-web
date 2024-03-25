@@ -1,4 +1,4 @@
-export { ApiKeyForm } from './ApiKeyForm/ApiKeyForm';
+export { ApiKeyGuard } from './ApiKeyGuard/ApiKeyGuard';
 export { Button } from './Button/Button';
 export { Header } from './Header/Header';
 export { Logo } from './Logo/Logo';

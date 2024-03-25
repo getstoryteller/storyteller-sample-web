@@ -1,12 +1,22 @@
+@import 'src/styles/modules/mixins.scss';
+
 .storyRow {
   --row-height: 128px;
 
+  @include breakpoint(0, desktop) {
+    margin-right: calc(var(--container-padding-inline) * -1);
+
+    header {
+      padding-right: var(--container-padding-inline);
+    }
+  }
+
   &[data-size='regular'] {
     @media (min-width: 400px) {
-      --row-height: var(--desktop-row-height, 140px);
+      --row-height: 140px;
 
       &[data-cell-type='square'] {
-        --row-height: var(--desktop-row-height, 180px);
+        --row-height: 180px;
       }
     }
   }
@@ -15,11 +25,11 @@
     --row-height: 216px;
 
     @media (min-width: 450px) {
-      --row-height: var(--desktop-row-height, 240px);
+      --row-height: 240px;
     }
   }
 
   &[data-size='large'] {
-    --row-height: var(--desktop-row-height, 300px);
+    --row-height: 300px;
   }
 }

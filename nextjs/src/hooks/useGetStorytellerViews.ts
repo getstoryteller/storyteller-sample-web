@@ -5,7 +5,7 @@ import { CellType } from '@getstoryteller/storyteller-sdk-javascript';
 import { useEnvVariables } from './useEnvVariables';
 
 export type StorytellerView = {
-  categories?: string[];
+  categories: string[];
   collection?: string;
   count?: number;
   id: string;
@@ -26,84 +26,31 @@ type Status = 'initial' | 'loading' | 'success' | 'error';
 // than the client. For an example, check our the server/page.tsx file which uses getStorytellerViews instead.
 
 export function useGetStorytellerViews() {
-  // @todo
-  // const { storytellerApiKey } = useEnvVariables();
-  // const [views, setViews] = useState<StorytellerView[]>([]);
-  // const [status, setStatus] = useState<Status>('initial');
+  const { storytellerApiKey } = useEnvVariables();
+  const [views, setViews] = useState<StorytellerView[]>([]);
+  const [status, setStatus] = useState<Status>('initial');
 
-  // useEffect(() => {
-  //   if (!storytellerApiKey) {
-  //     return;
-  //   }
+  useEffect(() => {
+    if (!storytellerApiKey) {
+      return;
+    }
 
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://sampleappcontent.usestoryteller.com/api/entries?apiKey=${storytellerApiKey}`,
-  //       );
-  //       const result = await response.json();
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://sampleappcontent.usestoryteller.com/api/entries?apiKey=${storytellerApiKey}`,
+        );
+        const result = await response.json();
 
-  //       setViews(result.data);
-  //       setStatus('success');
-  //     } catch (err) {
-  //       setStatus('error');
-  //     }
-  //   };
+        setViews(result.data);
+        setStatus('success');
+      } catch (err) {
+        setStatus('error');
+      }
+    };
 
-  //   fetchData();
-  // }, [storytellerApiKey]);
-
-  const views: StorytellerView[] = [
-    {
-      categories: ['live-stories'],
-      count: 30,
-      layout: 'row',
-      size: 'regular',
-      sortOrder: 1,
-      tileType: 'round',
-      videoType: 'stories',
-      id: '9h859g',
-    },
-    {
-      categories: ['top-stories'],
-      count: 20,
-      layout: 'row',
-      moreButtonTitle: 'More',
-      size: 'medium',
-      sortOrder: 2,
-      tileType: 'rectangular',
-      title: 'Top Stories',
-      videoType: 'stories',
-      id: 'fvgio',
-    },
-    {
-      categories: [],
-      collection: 'opening-week-fire-moments',
-      count: 14,
-      layout: 'row',
-      moreButtonTitle: 'More',
-      size: 'medium',
-      sortOrder: 3,
-      tileType: 'rectangular',
-      title: 'Must-see Moments',
-      videoType: 'clips',
-      id: '9w5dm',
-    },
-    {
-      categories: ['trending-content'],
-      count: 20,
-      layout: 'row',
-      moreButtonTitle: 'More',
-      size: 'medium',
-      sortOrder: 4,
-      tileType: 'rectangular',
-      title: 'Trending',
-      videoType: 'stories',
-      id: 'tuotug',
-    },
-  ];
-
-  const status = 'success';
+    fetchData();
+  }, [storytellerApiKey]);
 
   return { views, status };
 }

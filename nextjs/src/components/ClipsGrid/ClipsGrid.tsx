@@ -1,25 +1,15 @@
 'use client';
 
-import { useContext, useEffect, useRef, type CSSProperties } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import {
   IListConfiguration,
   StorytellerClipsGridView,
-  UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
 import { useUiStyle } from '@/hooks/useUiStyle';
 import { getCategoryParamFromName } from '@/helpers/getCategoryParam';
 import { StorytellerContext } from '@/contexts/StorytellerContext';
-import {
-  buildResponsiveLightTheme,
-  buildResponsiveDarkTheme,
-  TILE_SPACING,
-  getGridColumns,
-} from '@/helpers/buildResponsiveTheme';
-import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { useViewStatus, ViewStatus } from '@/hooks/useViewStatus';
 import { StorytellerViewHeader } from '../StorytellerViewHeader/StorytellerViewHeader';
-
-import styles from '../StoriesGrid/StoriesGrid.module.scss';
 
 interface StorytellerClipsGridViewProps {
   basename: string;
@@ -36,7 +26,6 @@ function ClipsGrid({
   moreButtonTitle,
   title,
 }: StorytellerClipsGridViewProps) {
-  const { windowWidth } = useWindowWidth();
   const { uiStyle } = useUiStyle();
   const { viewProps, setViewStatus: setClipsStatus } = useViewStatus();
   const { isStorytellerInitialized } = useContext(StorytellerContext);
@@ -79,21 +68,14 @@ function ClipsGrid({
       {
         basename,
         displayLimit,
-        theme: new UiTheme({
-          light: buildResponsiveLightTheme(windowWidth),
-          dark: buildResponsiveDarkTheme(windowWidth),
-        }),
         uiStyle,
       };
 
     clipsGrid.current.configuration = clipsGridConfiguration;
-  }, [basename, displayLimit, isStorytellerInitialized, uiStyle, windowWidth]);
-
-  const gridColumns = getGridColumns(windowWidth);
-  const gridRows = Math.floor((displayLimit || 4) / gridColumns);
+  }, [basename, displayLimit, isStorytellerInitialized, uiStyle]);
 
   return (
-    <article data-view-type="grid" {...viewProps}>
+    <article {...viewProps}>
       {title && (
         <StorytellerViewHeader
           title={title}
@@ -107,19 +89,7 @@ function ClipsGrid({
           }
         />
       )}
-      <div
-        id={basename}
-        data-base-url={title || collection}
-        className={styles.storyGrid}
-        style={
-          // Check the StoriesGrid.module.scss file for a detailed explanation of what these properties are used for
-          {
-            '--tile-spacing': `${TILE_SPACING}px`,
-            '--grid-columns': gridColumns,
-            '--grid-rows': gridRows,
-          } as CSSProperties
-        }
-      />
+      <div id={basename} data-base-url={title || collection} />
     </article>
   );
 }

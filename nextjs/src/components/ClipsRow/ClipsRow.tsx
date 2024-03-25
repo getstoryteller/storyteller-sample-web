@@ -4,16 +4,11 @@ import { useContext, useEffect, useRef } from 'react';
 import {
   IListConfiguration,
   StorytellerClipsRowView,
-  UiTheme,
 } from '@getstoryteller/storyteller-sdk-javascript';
 import { useUiStyle } from '@/hooks/useUiStyle';
 import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { getCategoryParamFromName } from '@/helpers/getCategoryParam';
 import { StorytellerContext } from '@/contexts/StorytellerContext';
-import {
-  buildResponsiveLightTheme,
-  buildResponsiveDarkTheme,
-} from '@/helpers/buildResponsiveTheme';
 import { useViewStatus, ViewStatus } from '@/hooks/useViewStatus';
 import { StorytellerViewHeader } from '../StorytellerViewHeader/StorytellerViewHeader';
 
@@ -79,23 +74,14 @@ function ClipsRow({
       {
         basename,
         displayLimit,
-        theme: new UiTheme({
-          light: buildResponsiveLightTheme(windowWidth),
-          dark: buildResponsiveDarkTheme(windowWidth),
-        }),
         uiStyle,
       };
 
     clipsRow.current.configuration = clipsRowConfiguration;
-  }, [basename, displayLimit, isStorytellerInitialized, uiStyle, windowWidth]);
+  }, [basename, displayLimit, isStorytellerInitialized, uiStyle]);
 
   return (
-    <article
-      className={styles.clipsRow}
-      data-size={size}
-      data-view-type="row"
-      {...viewProps}
-    >
+    <article className={styles.clipsRow} data-size={size} {...viewProps}>
       {title && (
         <StorytellerViewHeader
           title={title}

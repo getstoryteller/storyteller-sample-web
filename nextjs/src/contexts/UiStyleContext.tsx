@@ -7,12 +7,12 @@ import {
   useState,
   type PropsWithChildren,
 } from 'react';
+import { UiStyle } from '@getstoryteller/storyteller-sdk-javascript';
 import {
   LOCAL_STORAGE_KEYS,
   getLocalStorageSetting,
   saveLocalStorageSetting,
 } from '@/helpers/localStorage';
-import { UiStyle } from '@getstoryteller/storyteller-sdk-javascript';
 
 interface UiStyleContextValue {
   uiStyle: UiStyle;
