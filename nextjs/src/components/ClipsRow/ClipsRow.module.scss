@@ -1,0 +1,21 @@
+.clipsRow {
+  --row-height: 340px;
+
+  &[data-size='regular'] {
+    @media (min-width: 400px) {
+      --row-height: 180px;
+    }
+  }
+
+  &[data-size='medium'] {
+    --row-height: 216px;
+
+    @media (min-width: 450px) {
+      --row-height: 240px;
+    }
+  }
+
+  &[data-size='large'] {
+    --row-height: 300px;
+  }
+}

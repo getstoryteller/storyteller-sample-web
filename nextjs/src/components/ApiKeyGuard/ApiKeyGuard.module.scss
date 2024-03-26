@@ -1,0 +1,140 @@
+@import 'src/styles/modules/mixins.scss';
+
+.login {
+  --login-padding-block: 10vh;
+
+  @include breakpoint(0, mobile) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .illustration {
+      display: none;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr 7fr;
+
+    & > * {
+      align-content: center;
+    }
+
+    .form {
+      grid-column: 2 / span 1;
+    }
+
+    .illustration {
+      grid-column: 4 / span 1;
+    }
+  }
+}
+
+.form {
+  padding-block: var(--login-padding-block);
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+
+    & > p {
+      font-weight: var(--font-weight-light);
+    }
+  }
+}
+
+.illustration {
+  position: sticky;
+  top: 0;
+  padding-block: var(--login-padding-block);
+  height: 100vh;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    right: calc(var(--container-padding-inline) * -1px);
+    top: 50%;
+    transform: translateY(-50%) skew(-5deg, 0deg);
+    background-color: rgba(250, 235, 230, 1);
+
+    [data-theme='dark'] & {
+      background-color: rgba(28, 98, 235, 1);
+    }
+  }
+
+  img {
+    position: relative;
+    margin-left: 10%;
+    width: 80%;
+    height: auto;
+
+    [data-theme='dark'] & {
+      &[data-theme='light'] {
+        display: none;
+      }
+    }
+
+    [data-theme='light'] & {
+      &[data-theme='dark'] {
+        display: none;
+      }
+    }
+  }
+}
+
+$spinner-size: 32px;
+
+.loader {
+  position: relative;
+  flex: 1;
+}
+
+.loadingSpinner {
+  position: absolute;
+  z-index: 1;
+  top: calc(50% - $spinner-size / 2);
+  left: calc(50% - $spinner-size / 2);
+  width: $spinner-size;
+  height: $spinner-size;
+  animation: loadingSpinner 10s linear infinite;
+
+  div {
+    position: absolute;
+    display: block;
+    height: $spinner-size;
+    width: $spinner-size;
+    border: 2px solid var(--brand-primary);
+    border-color: var(--brand-primary) transparent transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: loadingSpinner 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+
+    &:nth-child(1) {
+      animation-delay: -0.3s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: -0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: -0.1s;
+    }
+  }
+}
+
+@keyframes loadingSpinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

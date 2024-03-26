@@ -1,4 +1,7 @@
-import { ActivityType, UserActivityData } from '@getstoryteller/storyteller-sdk-javascript';
+import {
+  ActivityType,
+  UserActivityData,
+} from '@getstoryteller/storyteller-sdk-javascript';
 import * as amplitude from '@amplitude/analytics-browser';
 import { useContext } from 'react';
 import { AmplitudeContext } from '@/contexts/AmplitudeContext';
@@ -13,9 +16,12 @@ import { AmplitudeContext } from '@/contexts/AmplitudeContext';
 // https://www.getstoryteller.com/documentation/web/analytics
 
 export const useAmplitudeTracker = () => {
-  const { amplitudeInitialized } = useContext(AmplitudeContext);
+  const { isAmplitudeInitialized } = useContext(AmplitudeContext);
 
-  const logUserActivityToAmplitude = (type: ActivityType, data: UserActivityData): void => {
+  const logUserActivityToAmplitude = (
+    type: ActivityType,
+    data: UserActivityData,
+  ): void => {
     switch (type) {
       case ActivityType.openedStory:
         logOpenedStory(data);
@@ -78,7 +84,7 @@ export const useAmplitudeTracker = () => {
   };
 
   const logEvent = (eventName: string, eventProperties?: any): void => {
-    if (amplitudeInitialized) {
+    if (isAmplitudeInitialized) {
       amplitude.logEvent(eventName, eventProperties);
     } else {
       console.log(`AmplitudeTracker: ${eventName}`, eventProperties);

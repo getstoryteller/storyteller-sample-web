@@ -1,0 +1,13 @@
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 16px;
+}
+
+.title {
+  flex: 1;
+  font-size: 1.5rem;
+  line-height: 0.8;
+  margin-block: 0;
+}

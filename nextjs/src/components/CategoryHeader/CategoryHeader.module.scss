@@ -1,0 +1,21 @@
+@import 'src/styles/modules/mixins.scss';
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  justify-items: start;
+  text-align: center;
+  grid-gap: 16px;
+  padding-bottom: 16px;
+
+  @include breakpoint(0, mobile) {
+    a {
+      padding: 16px;
+
+      span {
+        display: none;
+      }
+    }
+  }
+}

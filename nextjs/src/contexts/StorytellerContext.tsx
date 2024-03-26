@@ -1,16 +1,24 @@
 'use client';
 
-import React, {
-  PropsWithChildren,
+import {
+  createContext,
   useCallback,
   useEffect,
   useState,
+  useRef,
+  type ReactNode,
 } from 'react';
 import {
   sharedInstance as Storyteller,
+  UiTheme,
   type ActivityType,
   type UserActivityData,
 } from '@getstoryteller/storyteller-sdk-javascript';
+import {
+  buildResponsiveDarkTheme,
+  buildResponsiveLightTheme,
+} from '@/helpers/buildResponsiveTheme';
+import { useWindowWidth } from '@/hooks/useWindowWidth';
 import { useEnvVariables } from '@/hooks/useEnvVariables';
 import { useAmplitudeTracker } from '@/hooks/useAmplitudeTracker';
 
@@ -23,30 +31,38 @@ import { useAmplitudeTracker } from '@/hooks/useAmplitudeTracker';
 // There is more information about this in our documentation:
 // https://www.getstoryteller.com/documentation/web/users
 
-export const StorytellerContext = React.createContext({
+type StorytellerContextType = {
+  isStorytellerInitialized: boolean;
+  storytellerInstance: typeof Storyteller | null;
+};
+
+export const StorytellerContext = createContext<StorytellerContextType>({
   isStorytellerInitialized: false,
-  initializeStoryteller: (userId?: string) => {},
+  storytellerInstance: null,
 });
 
-const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
-  children,
-}) => {
+const StorytellerContextProvider = ({ children }: { children: ReactNode }) => {
+  const { windowWidth } = useWindowWidth();
   const { storytellerApiKey } = useEnvVariables();
   const { logUserActivityToAmplitude } = useAmplitudeTracker();
 
   const [isStorytellerInitialized, setIsStorytellerInitialized] =
     useState<boolean>(false);
 
+  let storytellerInstance = useRef<typeof Storyteller | null>(null);
+
   const initializeStoryteller = useCallback(
     (userId?: string) => {
       if (!storytellerApiKey) {
-        throw new Error('Web SDK API key is not defined');
+        console.error('Web SDK API key is not defined');
+        return;
       }
 
       if (!isStorytellerInitialized) {
-        // Handle page navigation
+        // Reuse the same Storyteller instance on route change
         if (Storyteller.isInitialized) {
           setIsStorytellerInitialized(true);
+          storytellerInstance.current = Storyteller;
           return;
         }
 
@@ -55,6 +71,7 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
         }).then(() => {
           setIsStorytellerInitialized(true);
           console.log('Storyteller initialized', Storyteller.version);
+          storytellerInstance.current = Storyteller;
 
           Storyteller.enableLogging();
 
@@ -120,6 +137,15 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
   );
 
   useEffect(() => {
+    if (isStorytellerInitialized && storytellerInstance.current) {
+      storytellerInstance.current.theme = new UiTheme({
+        light: buildResponsiveLightTheme(windowWidth),
+        dark: buildResponsiveDarkTheme(windowWidth),
+      });
+    }
+  }, [storytellerInstance, isStorytellerInitialized, windowWidth]);
+
+  useEffect(() => {
     if (!isStorytellerInitialized) {
       initializeStoryteller();
     }
@@ -127,7 +153,10 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
 
   return (
     <StorytellerContext.Provider
-      value={{ isStorytellerInitialized, initializeStoryteller }}
+      value={{
+        isStorytellerInitialized,
+        storytellerInstance: storytellerInstance.current,
+      }}
     >
       {children}
     </StorytellerContext.Provider>

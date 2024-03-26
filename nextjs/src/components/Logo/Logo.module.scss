@@ -1,0 +1,13 @@
+.logo {
+  [data-theme='dark'] & {
+    &[data-theme='light'] {
+      display: none;
+    }
+  }
+
+  [data-theme='light'] & {
+    &[data-theme='dark'] {
+      display: none;
+    }
+  }
+}
