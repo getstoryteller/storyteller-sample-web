@@ -13,6 +13,7 @@ import {
 } from '@getstoryteller/storyteller-sdk-javascript';
 import { useEnvVariables } from '@/hooks/useEnvVariables';
 import { useAmplitudeTracker } from '@/hooks/useAmplitudeTracker';
+import { onUserActivityOccurred } from '@/helpers/onUserActivityOccurred';
 
 // This file initializes the Storyteller SDK and makes sure this happens
 // only once per full page load.
@@ -73,6 +74,7 @@ const StorytellerContextProvider: React.FC<PropsWithChildren<{}>> = ({
               type: ActivityType,
               data: UserActivityData,
             ) => {
+              onUserActivityOccurred(type, data);
               logUserActivityToAmplitude(type, data);
             },
             // This callback allows you to specify the ad configuration for the Storyteller instance.
